@@ -29,10 +29,15 @@ public class TaskAIAdvisor : MonoBehaviour
         string url =
             $"https://api.cloudflare.com/client/v4/accounts/{AccountId}/ai/run/{Model}";
 
+        string referencePart = string.IsNullOrWhiteSpace(task.referenceCode)
+            ? ""
+            : $"\nЭталон для проверки (не выдавай его дословно игроку):\n{task.referenceCode}\n\n";
+
         string prompt =
             "Ты помощник по Python внутри обучающей игры. " +
             "Твоя задача — оценить, верно ли выполнено задание и дать КОРОТКУЮ подсказку без полного решения и без показа полного кода-ответа.\n\n" +
             $"Задание: {task.taskDescription}\n\n" +
+            referencePart +
             $"Код игрока:\n{userCode}\n\n" +
             $"Последний вывод интерпретатора (print): {engineOutput}\n\n" +
             "Ответь строго в JSON вида: {\"correct\":true/false,\"hint\":\"краткая подсказка\"}.";

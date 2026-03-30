@@ -1,0 +1,218 @@
+fileFormatVersion: 2
+guid: 3ed54bb1858c9f2458a8a3244b20579e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4865807165438683254
+    second: foni-papik-pro-6p0v-p-kartinki-maska-teatr-na-prozrachnom-fone-1_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: foni-papik-pro-6p0v-p-kartinki-maska-teatr-na-prozrachnom-fone-1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 7859
+        height: 4820
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: -2618.5, y: 1795}
+        - {x: -2661.5, y: 1709}
+        - {x: -2672.5, y: 1578}
+        - {x: -2652.5, y: 1332}
+        - {x: -2581.5, y: 1016}
+        - {x: -2442.5, y: 649}
+        - {x: -2266.5, y: 324}
+        - {x: -2030.5, y: 19}
+        - {x: -1765.5, y: -228}
+        - {x: -1526.5, y: -388}
+        - {x: -1286.5, y: -513}
+        - {x: -1083.5, y: -585}
+        - {x: -914.5, y: -598}
+        - {x: -749.5, y: -582}
+        - {x: -604.5, y: -531}
+        - {x: -435.5, y: -424}
+        - {x: -297.5, y: -284}
+        - {x: -160.5, y: -78}
+        - {x: -42.5, y: 188}
+        - {x: 26.5, y: 384}
+        - {x: 74.5, y: 588}
+        - {x: 109.5, y: 819}
+        - {x: 122.5, y: 961}
+        - {x: 122.5, y: 1239}
+        - {x: 104.5, y: 1484}
+        - {x: 73.5, y: 1695}
+        - {x: 21.5, y: 1933}
+        - {x: -3.5, y: 2019}
+        - {x: -49.5, y: 2121}
+        - {x: -91.5, y: 2197}
+        - {x: -148.5, y: 2263}
+        - {x: -203.5, y: 2308}
+        - {x: -287.5, y: 2341}
+        - {x: -364.5, y: 2343}
+        - {x: -481.5, y: 2317}
+        - {x: -679.5, y: 2213}
+        - {x: -831.5, y: 2111}
+        - {x: -1021.5, y: 1987}
+        - {x: -1198.5, y: 1895}
+        - {x: -1341.5, y: 1853}
+        - {x: -1530.5, y: 1829}
+        - {x: -1706.5, y: 1828}
+        - {x: -1825.5, y: 1843}
+        - {x: -1995.5, y: 1879}
+        - {x: -2166.5, y: 1920}
+        - {x: -2284.5, y: 1935}
+        - {x: -2369.5, y: 1931}
+        - {x: -2494.5, y: 1899}
+        - {x: -2565.5, y: 1856}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 678e58936d1d68340800000000000000
+      internalID: 4865807165438683254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 64acdc91bb2a0aa419cd63a9b0ac6145
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      foni-papik-pro-6p0v-p-kartinki-maska-teatr-na-prozrachnom-fone-1_0: 4865807165438683254
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

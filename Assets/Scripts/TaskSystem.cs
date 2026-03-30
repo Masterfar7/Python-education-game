@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -48,6 +51,8 @@ public class TaskSystem : MonoBehaviour
         if (string.IsNullOrEmpty(code))
             return;
 
+        InterpreterEngine snapshotBefore = engine.Clone();
+
         bool executed = engine.Execute(code);
 
         if (!executed)
@@ -56,11 +61,11 @@ public class TaskSystem : MonoBehaviour
             return;
         }
 
-        CheckTask(code);
+        CheckTask(code, snapshotBefore);
         codeInput.text = "";
     }
 
-    void CheckTask(string userCode)
+    void CheckTask(string userCode, InterpreterEngine snapshotBefore)
     {
         if (currentTaskIndex >= tasks.Length)
         {
@@ -71,8 +76,14 @@ public class TaskSystem : MonoBehaviour
         TaskData task = tasks[currentTaskIndex];
         bool passed = false;
 
-        switch (task.taskType)
+        if (!string.IsNullOrWhiteSpace(task.referenceCode))
         {
+            passed = CheckTaskAgainstReference(task, snapshotBefore);
+        }
+        else
+        {
+            switch (task.taskType)
+            {
             case TaskType.PrintExact:
                 passed = engine.lastPrintedValue.Trim() == task.expectedString.Trim();
                 break;
@@ -152,6 +163,11 @@ public class TaskSystem : MonoBehaviour
                     }
                 }
                 break;
+
+            case TaskType.BooleanDoorRiddle:
+                passed = CheckBooleanDoorRiddle(task);
+                break;
+            }
         }
 
         if (passed)
@@ -173,6 +189,191 @@ public class TaskSystem : MonoBehaviour
 
         // Сообщаем DialogueManager что задание выполнено
         dialogueManager.OnTaskCompleted();
+    }
+
+    bool CheckTaskAgainstReference(TaskData task, InterpreterEngine snapshotBefore)
+    {
+        var refEngine = snapshotBefore.Clone();
+        string refCode = task.referenceCode.Trim();
+        if (!refEngine.Execute(refCode))
+        {
+            Debug.LogWarning("TaskSystem: эталонный код (referenceCode) не выполняется — проверь синтаксис в задании.");
+            return false;
+        }
+
+        List<object> refChanged = CollectChangedVariableValues(snapshotBefore.variables, refEngine.variables);
+        List<object> stuChanged = CollectChangedVariableValues(snapshotBefore.variables, engine.variables);
+        if (!MultisetEqualValues(refChanged, stuChanged))
+            return false;
+
+        return ReferencePrintMatches(task.taskType, engine.lastPrintedValue, refEngine.lastPrintedValue);
+    }
+
+    static List<object> CollectChangedVariableValues(
+        Dictionary<string, object> snapshot,
+        Dictionary<string, object> final)
+    {
+        var list = new List<object>();
+        foreach (var kv in final)
+        {
+            if (!snapshot.TryGetValue(kv.Key, out object oldVal) || !ValuesEqual(oldVal, kv.Value))
+                list.Add(kv.Value);
+        }
+
+        return list;
+    }
+
+    static bool MultisetEqualValues(List<object> a, List<object> b)
+    {
+        if (a.Count != b.Count)
+            return false;
+
+        var used = new bool[b.Count];
+        for (int i = 0; i < a.Count; i++)
+        {
+            int found = -1;
+            for (int j = 0; j < b.Count; j++)
+            {
+                if (used[j])
+                    continue;
+                if (ValuesEqual(a[i], b[j]))
+                {
+                    found = j;
+                    break;
+                }
+            }
+
+            if (found < 0)
+                return false;
+            used[found] = true;
+        }
+
+        return true;
+    }
+
+    static bool ValuesEqual(object a, object b)
+    {
+        if (a == null && b == null)
+            return true;
+        if (a == null || b == null)
+            return false;
+
+        if (TryGetNumeric(a, out float fa) && TryGetNumeric(b, out float fb))
+            return Mathf.Approximately(fa, fb);
+
+        if (TryGetBoolVariable(a, out bool ba) && TryGetBoolVariable(b, out bool bb))
+            return ba == bb;
+
+        return string.Equals(a.ToString(), b.ToString(), System.StringComparison.Ordinal);
+    }
+
+    static bool TryGetNumeric(object v, out float f)
+    {
+        f = 0f;
+        if (v is float x)
+        {
+            f = x;
+            return true;
+        }
+
+        if (v is int i)
+        {
+            f = i;
+            return true;
+        }
+
+        if (v is double d)
+        {
+            f = (float)d;
+            return true;
+        }
+
+        return float.TryParse(
+            v?.ToString(),
+            NumberStyles.Float,
+            CultureInfo.InvariantCulture,
+            out f);
+    }
+
+    static bool ReferencePrintMatches(TaskType type, string studentPrint, string referencePrint)
+    {
+        string rs = referencePrint.Trim();
+        string ss = studentPrint.Trim();
+        if (string.IsNullOrEmpty(rs))
+            return true;
+
+        if (type == TaskType.PrintContains)
+            return ss.IndexOf(rs, System.StringComparison.Ordinal) >= 0;
+
+        return DoorPrintMatches(ss, rs);
+    }
+
+    bool CheckBooleanDoorRiddle(TaskData task)
+    {
+        if (string.IsNullOrEmpty(task.doorPrintIfLeft) || string.IsNullOrEmpty(task.doorPrintIfRight))
+        {
+            Debug.LogWarning("TaskSystem: BooleanDoorRiddle — задайте doorPrintIfLeft и doorPrintIfRight.");
+            return false;
+        }
+
+        string output = engine.lastPrintedValue.Trim();
+        if (string.IsNullOrEmpty(output))
+            return false;
+
+        // Любые имена переменных: ищем упорядоченную пару (левое утверждение, правое утверждение)
+        // со значениями из задания; итог «левая честна» = left && !right; сверяем print.
+        foreach (string kL in engine.variables.Keys)
+        {
+            if (!TryGetBoolVariable(engine.variables[kL], out bool leftVal))
+                continue;
+
+            foreach (string kR in engine.variables.Keys)
+            {
+                if (kR == kL)
+                    continue;
+                if (!TryGetBoolVariable(engine.variables[kR], out bool rightVal))
+                    continue;
+                if (leftVal != task.doorExpectedLeft || rightVal != task.doorExpectedRight)
+                    continue;
+
+                bool expectedTruthful = leftVal && !rightVal;
+                string expectedPrint = expectedTruthful ? task.doorPrintIfLeft : task.doorPrintIfRight;
+                if (DoorPrintMatches(output, expectedPrint))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    static bool DoorPrintMatches(string actual, string expected)
+    {
+        actual = actual.Trim();
+        expected = expected.Trim();
+        if (string.Equals(actual, expected, System.StringComparison.Ordinal))
+            return true;
+
+        string normA = Regex.Replace(actual, @"\s+", " ");
+        string normE = Regex.Replace(expected, @"\s+", " ");
+        return string.Equals(normA, normE, System.StringComparison.Ordinal);
+    }
+
+    static bool TryGetBoolVariable(object v, out bool result)
+    {
+        result = false;
+        if (v is bool b)
+        {
+            result = b;
+            return true;
+        }
+
+        if (bool.TryParse(v?.ToString(), out bool parsed))
+        {
+            result = parsed;
+            return true;
+        }
+
+        return false;
     }
 
     void OnTaskFailed(TaskData task, string userCode)

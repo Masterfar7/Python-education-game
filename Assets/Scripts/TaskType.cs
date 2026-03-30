@@ -4,5 +4,8 @@ public enum TaskType
     PrintContains,
     VariableAssignment,
     ExpressionResult,
-    BooleanValue
+    BooleanValue,
+
+    /// <summary>Двери: проверка двух bool-утверждений, left_is_truthful и финального print.</summary>
+    BooleanDoorRiddle
 }

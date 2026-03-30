@@ -11,6 +11,16 @@ public class DialogueLine
 
     public bool startTaskAfterLine;
 
+    [Tooltip("После полной печати текста этой реплики показать UI на объекте с DialogueTaskObjectUI.")]
+    public bool showTaskObjectUIAfterText;
+
+    public DialogueTaskObjectUI taskObjectUI;
+
+    [Tooltip("Завершение главы: после полной печати этой реплики показать указанный UI-объект (SetActive(true)).")]
+    public bool showChapterCompleteUIAfterText;
+
+    public GameObject chapterCompleteUI;
+
     // Включить вспышку и сияющие глаза статуи на этой реплике
     public bool triggerStatueFlash;
 

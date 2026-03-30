@@ -67,6 +67,9 @@ public class DialogueManager : MonoBehaviour
 
     private Coroutine typingCoroutine;
     private TaskSystem taskSystem;
+    private DialogueTaskObjectUI activeTaskObjectUI;
+    private Coroutine taskObjectUICoroutine;
+    private Coroutine chapterCompleteUICoroutine;
 
     private void Awake()
     {
@@ -113,6 +116,8 @@ public class DialogueManager : MonoBehaviour
         if (taskSystem != null)
             taskSystem.ResetTasks();
 
+        ClearTaskObjectUI(destroyLinkedObject: false);
+
         ShowLine();
     }
 
@@ -143,6 +148,8 @@ public class DialogueManager : MonoBehaviour
     public void OnTaskCompleted()
     {
         if (!isActive) return;
+
+        ClearTaskObjectUI(destroyLinkedObject: true);
 
         // Выходим из taskMode
         taskMode = false;
@@ -237,6 +244,20 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(typingCoroutine);
 
         typingCoroutine = StartCoroutine(TypeText(line.text));
+
+        if (line.startTaskAfterLine && line.showTaskObjectUIAfterText && line.taskObjectUI != null)
+        {
+            if (taskObjectUICoroutine != null)
+                StopCoroutine(taskObjectUICoroutine);
+            taskObjectUICoroutine = StartCoroutine(ShowTaskObjectUIAfterTyping(line));
+        }
+
+        if (line.showChapterCompleteUIAfterText && line.chapterCompleteUI != null)
+        {
+            if (chapterCompleteUICoroutine != null)
+                StopCoroutine(chapterCompleteUICoroutine);
+            chapterCompleteUICoroutine = StartCoroutine(ShowChapterCompleteUIAfterTyping(line));
+        }
 
         // Если после этой реплики должно быть задание
         if (line.startTaskAfterLine)
@@ -588,6 +609,14 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        ClearTaskObjectUI(destroyLinkedObject: false);
+
+        if (chapterCompleteUICoroutine != null)
+        {
+            StopCoroutine(chapterCompleteUICoroutine);
+            chapterCompleteUICoroutine = null;
+        }
+
         isActive = false;
         taskMode = false;
         dialoguePanel.SetActive(false);
@@ -692,5 +721,54 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
         dialogueText.text = newText;
+    }
+
+    private IEnumerator ShowTaskObjectUIAfterTyping(DialogueLine line)
+    {
+        while (isTyping)
+            yield return null;
+
+        taskObjectUICoroutine = null;
+
+        if (!isActive || line.taskObjectUI == null || !taskMode)
+            yield break;
+
+        if (activeTaskObjectUI != null && activeTaskObjectUI != line.taskObjectUI)
+            activeTaskObjectUI.HideWithoutDestroy();
+
+        activeTaskObjectUI = line.taskObjectUI;
+        activeTaskObjectUI.ShowAfterTaskText();
+    }
+
+    private IEnumerator ShowChapterCompleteUIAfterTyping(DialogueLine line)
+    {
+        while (isTyping)
+            yield return null;
+
+        chapterCompleteUICoroutine = null;
+
+        if (!isActive || line.chapterCompleteUI == null)
+            yield break;
+
+        line.chapterCompleteUI.SetActive(true);
+    }
+
+    private void ClearTaskObjectUI(bool destroyLinkedObject)
+    {
+        if (taskObjectUICoroutine != null)
+        {
+            StopCoroutine(taskObjectUICoroutine);
+            taskObjectUICoroutine = null;
+        }
+
+        if (activeTaskObjectUI == null)
+            return;
+
+        if (destroyLinkedObject)
+            activeTaskObjectUI.HideAfterTaskComplete();
+        else
+            activeTaskObjectUI.HideWithoutDestroy();
+
+        activeTaskObjectUI = null;
     }
 }
