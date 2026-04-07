@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -13,7 +14,13 @@ public class InterpreterEngine
         var copy = new InterpreterEngine();
         copy.lastPrintedValue = lastPrintedValue;
         foreach (var kv in variables)
-            copy.variables[kv.Key] = kv.Value;
+        {
+            if (kv.Value is List<object> lst)
+                copy.variables[kv.Key] = new List<object>(lst);
+            else
+                copy.variables[kv.Key] = kv.Value;
+        }
+
         return copy;
     }
 
@@ -142,6 +149,103 @@ public class InterpreterEngine
                 continue;
             }
 
+            if (trimmed.StartsWith("for ", System.StringComparison.Ordinal))
+            {
+                int forIndent = GetIndent(line);
+                int j = i + 1;
+                while (j < rawLines.Count)
+                {
+                    string bl = rawLines[j];
+                    string bc = StripComment(bl).TrimEnd();
+                    if (string.IsNullOrWhiteSpace(bc))
+                    {
+                        j++;
+                        continue;
+                    }
+
+                    if (GetIndent(bl) <= forIndent)
+                        break;
+                    j++;
+                }
+
+                int bodyStart = i + 1;
+                int bodyEnd = j - 1;
+                string innerCode = BuildDedentBlock(rawLines, bodyStart, bodyEnd);
+                if (innerCode == null)
+                    return false;
+
+                Match rangeFm = Regex.Match(trimmed, @"^for\s+(\w+)\s+in\s+range\s*\(\s*([^)]*)\s*\)\s*:\s*$");
+                if (rangeFm.Success)
+                {
+                    string loopVar = rangeFm.Groups[1].Value;
+                    string rangeArg = rangeFm.Groups[2].Value.Trim();
+                    int iterCount = ParseLoopCount(rangeArg);
+                    if (iterCount < 0)
+                        return false;
+                    iterCount = Mathf.Min(iterCount, 10000);
+
+                    if (iterCount == 0)
+                    {
+                        i = j;
+                        continue;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(innerCode))
+                    {
+                        variables[loopVar] = (float)(iterCount - 1);
+                        anyExecuted = true;
+                        i = j;
+                        continue;
+                    }
+
+                    for (int iter = 0; iter < iterCount; iter++)
+                    {
+                        variables[loopVar] = (float)iter;
+                        if (!Execute(innerCode))
+                            return false;
+                        anyExecuted = true;
+                    }
+
+                    i = j;
+                    continue;
+                }
+
+                Match listFm = Regex.Match(trimmed, @"^for\s+(\w+)\s+in\s+(\w+)\s*:\s*$");
+                if (!listFm.Success)
+                    return false;
+
+                string loopVarName = listFm.Groups[1].Value;
+                string iterableName = listFm.Groups[2].Value;
+                if (!variables.TryGetValue(iterableName, out object iterObj) || !(iterObj is List<object> itemList))
+                    return false;
+
+                int n = Mathf.Min(itemList.Count, 10000);
+                if (n == 0)
+                {
+                    i = j;
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(innerCode))
+                {
+                    variables[loopVarName] = itemList[n - 1];
+                    anyExecuted = true;
+                    i = j;
+                    continue;
+                }
+
+                for (int idx = 0; idx < n; idx++)
+                {
+                    variables[loopVarName] = itemList[idx];
+                    if (!Execute(innerCode))
+                        return false;
+                    anyExecuted = true;
+                }
+
+                i = j;
+                continue;
+            }
+
             foreach (string statement in SplitStatements(stripped + "\n"))
             {
                 string s = StripComment(statement).Trim();
@@ -168,6 +272,7 @@ public class InterpreterEngine
         bool inDouble = false;
         bool escape = false;
         int parenDepth = 0;
+        int bracketDepth = 0;
 
         for (int k = 0; k < code.Length; k++)
         {
@@ -204,13 +309,15 @@ public class InterpreterEngine
             if (!inSingle && !inDouble)
             {
                 if (c == '(') parenDepth++;
-                if (c == ')' && parenDepth > 0) parenDepth--;
+                else if (c == ')' && parenDepth > 0) parenDepth--;
+                else if (c == '[') bracketDepth++;
+                else if (c == ']' && bracketDepth > 0) bracketDepth--;
 
                 bool isSeparator =
                     c == '\n' ||
                     c == '\r' ||
                     c == ';' ||
-                    (c == ',' && parenDepth == 0);
+                    (c == ',' && parenDepth == 0 && bracketDepth == 0);
 
                 if (isSeparator)
                 {
@@ -313,8 +420,25 @@ public class InterpreterEngine
         Match printMatch = Regex.Match(codeLine, @"^print\s*\((.*)\)$");
         if (printMatch.Success)
         {
-            string content = Evaluate(printMatch.Groups[1].Value);
-            lastPrintedValue = content;
+            string inside = printMatch.Groups[1].Value.Trim();
+            List<string> argStrings = SplitTopLevelComma(inside);
+            if (argStrings.Count == 1)
+            {
+                lastPrintedValue = EvaluatePrintArg(argStrings[0].Trim());
+            }
+            else
+            {
+                var parts = new List<string>(argStrings.Count);
+                foreach (string a in argStrings)
+                {
+                    string t = a.Trim();
+                    if (t.Length > 0)
+                        parts.Add(EvaluatePrintArg(t));
+                }
+
+                lastPrintedValue = string.Join(" ", parts);
+            }
+
             return true;
         }
 
@@ -332,23 +456,118 @@ public class InterpreterEngine
         return false;
     }
 
-    string Evaluate(string expr)
+    string EvaluatePrintArg(string expr)
     {
         expr = expr.Trim();
+        if (expr.Length == 0)
+            return "";
 
-        Match strMatch = Regex.Match(expr, @"['""](.*?)['""]");
+        Match strMatch = Regex.Match(expr, @"^['""](.*)['""]$");
         if (strMatch.Success)
             return strMatch.Groups[1].Value;
 
-        if (variables.ContainsKey(expr))
-            return variables[expr].ToString();
+        if (variables.TryGetValue(expr, out object v))
+            return ValueToPrintString(v);
+
+        if (TryParseNumber(expr, out float num))
+        {
+            if (Mathf.Approximately(num, Mathf.Round(num)))
+                return ((int)num).ToString(CultureInfo.InvariantCulture);
+            return num.ToString(CultureInfo.InvariantCulture);
+        }
+
+        if (expr == "True" || expr == "False")
+            return expr;
 
         return expr;
+    }
+
+    static string ValueToPrintString(object v)
+    {
+        if (v == null)
+            return "";
+        if (v is List<object>)
+            return "[...]";
+        if (v is float f)
+        {
+            if (Mathf.Approximately(f, Mathf.Round(f)))
+                return ((int)f).ToString(CultureInfo.InvariantCulture);
+            return f.ToString(CultureInfo.InvariantCulture);
+        }
+
+        return v.ToString();
+    }
+
+    static List<string> SplitTopLevelComma(string s)
+    {
+        var result = new List<string>();
+        var sb = new StringBuilder();
+        int parenDepth = 0;
+        int bracketDepth = 0;
+        bool inSingle = false;
+        bool inDouble = false;
+        bool escape = false;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char c = s[i];
+
+            if (escape)
+            {
+                sb.Append(c);
+                escape = false;
+                continue;
+            }
+
+            if ((inSingle || inDouble) && c == '\\')
+            {
+                sb.Append(c);
+                escape = true;
+                continue;
+            }
+
+            if (!inDouble && c == '\'')
+            {
+                inSingle = !inSingle;
+                sb.Append(c);
+                continue;
+            }
+
+            if (!inSingle && c == '"')
+            {
+                inDouble = !inDouble;
+                sb.Append(c);
+                continue;
+            }
+
+            if (!inSingle && !inDouble)
+            {
+                if (c == '(') parenDepth++;
+                else if (c == ')' && parenDepth > 0) parenDepth--;
+                else if (c == '[') bracketDepth++;
+                else if (c == ']' && bracketDepth > 0) bracketDepth--;
+
+                if (c == ',' && parenDepth == 0 && bracketDepth == 0)
+                {
+                    result.Add(sb.ToString());
+                    sb.Length = 0;
+                    continue;
+                }
+            }
+
+            sb.Append(c);
+        }
+
+        result.Add(sb.ToString());
+        return result;
     }
 
     object EvaluateRaw(string expr)
     {
         expr = expr.Trim();
+
+        if (expr.Length >= 2 && expr[0] == '[' && expr[expr.Length - 1] == ']')
+            return ParseListLiteral(expr.Substring(1, expr.Length - 2));
 
         if (LooksLikeBoolExpression(expr))
             return EvaluateBoolExpr(expr);
@@ -379,6 +598,24 @@ public class InterpreterEngine
             return variables[expr];
 
         return expr;
+    }
+
+    List<object> ParseListLiteral(string inner)
+    {
+        inner = inner.Trim();
+        var list = new List<object>();
+        if (inner.Length == 0)
+            return list;
+
+        foreach (string part in SplitTopLevelComma(inner))
+        {
+            string p = part.Trim();
+            if (p.Length == 0)
+                continue;
+            list.Add(EvaluateRaw(p));
+        }
+
+        return list;
     }
 
     static bool LooksLikeBoolExpression(string expr)
@@ -448,6 +685,80 @@ public class InterpreterEngine
     {
         string normalized = text.Trim().Replace(',', '.');
         return float.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out number);
+    }
+
+    int ParseLoopCount(string arg)
+    {
+        if (string.IsNullOrWhiteSpace(arg))
+            return -1;
+        arg = arg.Trim();
+        if (TryParseNumber(arg, out float n))
+            return Mathf.Max(0, (int)Mathf.Floor(n));
+        if (variables.ContainsKey(arg))
+            return Mathf.Max(0, (int)Mathf.Floor(ResolveNumberOrVariable(arg)));
+        return -1;
+    }
+
+    static string StripLeadingIndentUnits(string line, int unitsToRemove)
+    {
+        int consumed = 0;
+        int idx = 0;
+        while (idx < line.Length && consumed < unitsToRemove)
+        {
+            char c = line[idx];
+            if (c == ' ')
+            {
+                consumed++;
+                idx++;
+            }
+            else if (c == '\t')
+            {
+                consumed += 4;
+                idx++;
+            }
+            else
+                break;
+        }
+
+        return idx < line.Length ? line.Substring(idx) : "";
+    }
+
+    static string BuildDedentBlock(List<string> rawLines, int startIdx, int endIdxInclusive)
+    {
+        if (startIdx > endIdxInclusive)
+            return "";
+
+        int blockIndent = -1;
+        for (int k = startIdx; k <= endIdxInclusive; k++)
+        {
+            string t = StripCommentStatic(rawLines[k]).TrimEnd();
+            if (string.IsNullOrWhiteSpace(t))
+                continue;
+            blockIndent = GetIndent(rawLines[k]);
+            break;
+        }
+
+        if (blockIndent < 0)
+            return "";
+
+        var sb = new StringBuilder();
+        for (int k = startIdx; k <= endIdxInclusive; k++)
+        {
+            string raw = rawLines[k];
+            string t = StripCommentStatic(raw).TrimEnd();
+            if (string.IsNullOrWhiteSpace(t))
+            {
+                sb.AppendLine();
+                continue;
+            }
+
+            if (GetIndent(raw) < blockIndent)
+                return null;
+
+            sb.AppendLine(StripLeadingIndentUnits(raw, blockIndent));
+        }
+
+        return sb.ToString().TrimEnd();
     }
 
     string StripComment(string line)

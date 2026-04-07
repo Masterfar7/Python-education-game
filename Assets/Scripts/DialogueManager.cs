@@ -25,6 +25,10 @@ public class DialogueManager : MonoBehaviour
     [Header("Interpreter")]
     [SerializeField] private GameObject interpreterCanvas;
 
+    [Header("Пауза после 1-го задания")]
+    [Tooltip("После успешной сдачи первого задания панель диалога скрывается на это время, затем показывается следующая реплика.")]
+    [SerializeField] private float hideDialoguePanelAfterFirstTaskSeconds = 7f;
+
     [Header("Teleport Settings")]
     [SerializeField] private Transform player;
     [SerializeField] private Transform guide;
@@ -66,10 +70,13 @@ public class DialogueManager : MonoBehaviour
     private bool statueAwakened = false;
 
     private Coroutine typingCoroutine;
+    /// <summary>Кадр, в котором показана текущая реплика — защита от двойного клика в том же кадре (переход + «догнать печать»).</summary>
+    private int lineShownAtFrame = -1;
     private TaskSystem taskSystem;
     private DialogueTaskObjectUI activeTaskObjectUI;
     private Coroutine taskObjectUICoroutine;
     private Coroutine chapterCompleteUICoroutine;
+    private Coroutine firstTaskDialogueResumeCoroutine;
 
     private void Awake()
     {
@@ -108,6 +115,7 @@ public class DialogueManager : MonoBehaviour
         index = 0;
         isActive = true;
         taskMode = false;
+        instantTextMode = false;
 
         dialoguePanel.SetActive(true);
         nextButton.gameObject.SetActive(true);
@@ -127,6 +135,10 @@ public class DialogueManager : MonoBehaviour
 
         if (isTyping)
         {
+            // Иначе два события за один кадр: смена строки и тут же skip — текст кажется «мгновенным».
+            if (Time.frameCount == lineShownAtFrame)
+                return;
+
             StopCoroutine(typingCoroutine);
             dialogueText.text = lines[index].text;
             isTyping = false;
@@ -145,7 +157,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Вызывается из TaskSystem после правильного ответа
-    public void OnTaskCompleted()
+    public void OnTaskCompleted(bool pauseDialogueBeforeNextLineAfterFirstTask = false)
     {
         if (!isActive) return;
 
@@ -162,6 +174,24 @@ public class DialogueManager : MonoBehaviour
         if (playerMovement != null)
             playerMovement.enabled = true;
 
+        bool usePause = pauseDialogueBeforeNextLineAfterFirstTask &&
+                        hideDialoguePanelAfterFirstTaskSeconds > 0f;
+
+        if (usePause)
+        {
+            if (firstTaskDialogueResumeCoroutine != null)
+                StopCoroutine(firstTaskDialogueResumeCoroutine);
+            if (dialoguePanel != null)
+                dialoguePanel.SetActive(false);
+            firstTaskDialogueResumeCoroutine = StartCoroutine(ResumeDialogueAfterFirstTaskPause());
+            return;
+        }
+
+        AdvanceDialogueAfterTaskCompleted();
+    }
+
+    void AdvanceDialogueAfterTaskCompleted()
+    {
         index++;
 
         if (index >= lines.Length)
@@ -170,11 +200,24 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
         // Показываем кнопку "далее"
         nextButton.gameObject.SetActive(true);
 
         // Показываем следующую реплику
         ShowLine();
+    }
+
+    IEnumerator ResumeDialogueAfterFirstTaskPause()
+    {
+        yield return new WaitForSeconds(hideDialoguePanelAfterFirstTaskSeconds);
+        firstTaskDialogueResumeCoroutine = null;
+        if (!isActive)
+            yield break;
+
+        AdvanceDialogueAfterTaskCompleted();
     }
 
     private void ShowLine()
@@ -230,11 +273,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         // Включаем ауры статуй, если указано на этой реплике
-        if (line.enableFirstStatueAura && firstStatueAura != null)
-            firstStatueAura.EnableAura();
+        // if (line.enableFirstStatueAura && firstStatueAura != null)
+        //     firstStatueAura.EnableAura();
 
-        if (line.enableSecondStatueAura && secondStatueAura != null)
-            secondStatueAura.EnableAura();
+        // if (line.enableSecondStatueAura && secondStatueAura != null)
+        //     secondStatueAura.EnableAura();
 
         // Активируем рычаг, если указано на этой реплике
         if (line.activateLever && line.leverToActivate != null)
@@ -243,6 +286,7 @@ public class DialogueManager : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
+        lineShownAtFrame = Time.frameCount;
         typingCoroutine = StartCoroutine(TypeText(line.text));
 
         if (line.startTaskAfterLine && line.showTaskObjectUIAfterText && line.taskObjectUI != null)
@@ -617,8 +661,24 @@ public class DialogueManager : MonoBehaviour
             chapterCompleteUICoroutine = null;
         }
 
+        if (firstTaskDialogueResumeCoroutine != null)
+        {
+            StopCoroutine(firstTaskDialogueResumeCoroutine);
+            firstTaskDialogueResumeCoroutine = null;
+        }
+
         isActive = false;
         taskMode = false;
+        instantTextMode = false;
+
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        isTyping = false;
+
         dialoguePanel.SetActive(false);
 
         // Скрываем интерпретатор
@@ -716,11 +776,21 @@ public class DialogueManager : MonoBehaviour
     {
         if (!isActive) return;
 
+        if (newText == null)
+            newText = "";
+
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        isTyping = false;
-        dialogueText.text = newText;
+        if (instantTextMode)
+        {
+            isTyping = false;
+            dialogueText.text = newText;
+            return;
+        }
+
+        lineShownAtFrame = Time.frameCount;
+        typingCoroutine = StartCoroutine(TypeText(newText));
     }
 
     private IEnumerator ShowTaskObjectUIAfterTyping(DialogueLine line)

@@ -1,32 +1,43 @@
+using System.Collections;
 using UnityEngine;
 
 public class NPCDialogue : MonoBehaviour
 {
     public DialogueLine[] dialogueLines;
-    private bool playerInRange;
+    private bool dialogueAutoStarted;
 
-    private void Update()
+    private void Start()
     {
-        if (!playerInRange) return;
+        StartCoroutine(CheckPlayerAlreadyInTriggerNextFrame());
+    }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!DialogueManager.Instance.IsActive())
-            {
-                DialogueManager.Instance.StartDialogue(dialogueLines);
-            }
-        }
+    private IEnumerator CheckPlayerAlreadyInTriggerNextFrame()
+    {
+        yield return null;
+        if (dialogueAutoStarted) yield break;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) yield break;
+        Collider2D col = GetComponent<Collider2D>();
+        if (col == null) yield break;
+        if (col.OverlapPoint(player.transform.position))
+            TryStartDialogue();
+    }
+
+    private void TryStartDialogue()
+    {
+        if (dialogueAutoStarted) return;
+        if (DialogueManager.Instance == null) return;
+        if (DialogueManager.Instance.IsActive()) return;
+        if (dialogueLines == null || dialogueLines.Length == 0) return;
+
+        dialogueAutoStarted = true;
+        DialogueManager.Instance.StartDialogue(dialogueLines);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            playerInRange = true;
+        if (!other.CompareTag("Player")) return;
+        TryStartDialogue();
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-            playerInRange = false;
-    }
 }

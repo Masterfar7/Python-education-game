@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2374781938963213879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3258533740392464268}
+  - component: {fileID: 2564871312467171660}
+  - component: {fileID: 8861933865349509865}
+  m_Layer: 0
+  m_Name: CodeEditor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3258533740392464268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374781938963213879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.059373792, y: -0.42177093, z: 0.050781623}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2564871312467171660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374781938963213879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4e82d341b89c14e8f2367f31fb38af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  codeInput: {fileID: 0}
+  outputText: {fileID: 0}
+  runButton: {fileID: 0}
+  clearButton: {fileID: 0}
+  outputScrollRect: {fileID: 0}
+  taskText: {fileID: 0}
+  hintText: {fileID: 0}
+  hintPanel: {fileID: 0}
+  taskDescription: "\u0418\u0433\u0440\u043E\u043A \u0434\u043E\u043B\u0436\u0435\u043D
+    \u0432\u0432\u0435\u0441\u0442\u0438 \u043E\u0436\u0438\u0434\u0430\u0435\u043C\u044B\u0439
+    \u043E\u0442\u0432\u0435\u0442, \u0447\u0442\u043E\u0431\u044B \u0441\u0438\u043D\u0442\u0430\u043A\u0441\u0438\u0441
+    \u0441\u043E\u0431\u043B\u0431\u0434\u0430\u043B\u0441\u044F \u043F\u0438\u0442\u043E\u043D\u0430
+    \u0438 \u0431\u044B\u043B \u0442\u0430\u043A\u043E\u0439 \u0436\u0435 \u0441\u043C\u044B\u0441\u043B,
+    \u0435\u0441\u043B\u0438 \u0435\u0441\u0442\u044C \u043B\u0438\u0448\u043D\u044F\u044F
+    \u0437\u0430\u043F\u044F\u0442\u0430\u044F \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0435\u043B
+    \u043F\u0440\u0438\u0435\u043C\u043B\u0435\u043C\u043E"
+  expectedAnswer: "spirit_name = input(\"\u041A\u0430\u043A \u0442\u0435\u0431\u044F
+    \u0437\u043E\u0432\u0443\u0442, \u043A\u0430\u043C\u0435\u043D\u043D\u0430\u044F
+    \u043C\u043E\u0440\u0434\u0430? \")"
+  apiToken: v0evrauS54DVMbYhdhndrc-V9IDmlvkcYE4TjmkY
+  accountId: a0b0bcb493fbd1d65b5be16394b43305
+  aiModel: '@cf/meta/llama-3.1-8b-instruct'
+  maxOutputLines: 20
+  dialogueManager: {fileID: 0}
+  tasks:
+  - taskDescription: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439 \u043A\u043E\u043C\u0430\u043D\u0434\u0443
+      input() \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0438 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442
+      \u0432 \u043F\u0435\u0440\u0435\u043C\u0435\u043D\u043D\u0443\u044E.\xBB)"
+    expectedOutput: "spirit_name = input(\"\u041A\u0430\u043A \u0442\u0435\u0431\u044F
+      \u0437\u043E\u0432\u0443\u0442, \u043A\u0430\u043C\u0435\u043D\u043D\u0430\u044F
+      \u043C\u043E\u0440\u0434\u0430? \")"
+  interpreterCanvas: {fileID: 0}
+--- !u!114 &8861933865349509865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374781938963213879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e369acb070f2a4147b55d90d03d22f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  codeInput: {fileID: 0}
+  runButton: {fileID: 0}
+  dialogueManager: {fileID: 0}
+  tasks:
+  - taskDescription: "\u0417\u0430\u0434\u0430\u043D\u0438\u0435 1.1: \u0441\u043E\u0437\u0434\u0430\u0439
+      \u043F\u0435\u0440\u0435\u043C\u0435\u043D\u043D\u0443\u044E spirit_name \u0441
+      \u043F\u043E\u043C\u043E\u0449\u044C\u044E input()"
+    taskType: 2
+    referenceCode: 
+    expectedString: 
+    variableName: spirit_name
+    expectedNumber: 0
+    expectedBool: 0
+    doorVarLeftClaims: 
+    doorVarRightClaims: 
+    doorVarTruthful: 
+    doorExpectedLeft: 0
+    doorExpectedRight: 0
+    doorPrintIfLeft: 
+    doorPrintIfRight: 
+  - taskDescription: "\u0417\u0430\u0434\u0430\u043D\u0438\u0435 1.2: \u0432\u044B\u0432\u0435\u0434\u0438
+      \u043F\u0440\u0438\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u0441 \u0438\u043C\u0435\u043D\u0435\u043C
+      \u0434\u0443\u0445\u0430 \u0447\u0435\u0440\u0435\u0437 print()"
+    taskType: 1
+    referenceCode: 
+    expectedString: "\u041F\u0440\u0438\u0432\u0435\u0442, "
+    variableName: 
+    expectedNumber: 0
+    expectedBool: 0
+    doorVarLeftClaims: 
+    doorVarRightClaims: 
+    doorVarTruthful: 
+    doorExpectedLeft: 0
+    doorExpectedRight: 0
+    doorPrintIfLeft: 
+    doorPrintIfRight: 
+  - taskDescription: "\u0417\u0430\u0434\u0430\u043D\u0438\u0435 2.1: \u0441\u043E\u0437\u0434\u0430\u0439
+      power \u0438 accuracy, \u0432\u044B\u0447\u0438\u0441\u043B\u0438 strike_power
+      = power * accuracy"
+    taskType: 3
+    referenceCode: 
+    expectedString: 
+    variableName: strike_power
+    expectedNumber: 63.75
+    expectedBool: 0
+    doorVarLeftClaims: 
+    doorVarRightClaims: 
+    doorVarTruthful: 
+    doorExpectedLeft: 0
+    doorExpectedRight: 0
+    doorPrintIfLeft: 
+    doorPrintIfRight: 
+  - taskDescription: "\u0417\u0430\u0434\u0430\u043D\u0438\u0435 3.1: \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438
+      \u0431\u0443\u043B\u0435\u0432\u0443 \u043F\u0435\u0440\u0435\u043C\u0435\u043D\u043D\u0443\u044E
+      bool_switch \u043D\u0430 True"
+    taskType: 4
+    referenceCode: 
+    expectedString: 
+    variableName: bool_switch
+    expectedNumber: 0
+    expectedBool: 1
+    doorVarLeftClaims: 
+    doorVarRightClaims: 
+    doorVarTruthful: 
+    doorExpectedLeft: 0
+    doorExpectedRight: 0
+    doorPrintIfLeft: 
+    doorPrintIfRight: 
+  - taskDescription: "\u0417\u0430\u0434\u0430\u043D\u0438\u0435 3.2: \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438
+      \u0431\u0443\u043B\u0435\u0432\u0443 \u043F\u0435\u0440\u0435\u043C\u0435\u043D\u043D\u0443\u044E
+      bool_switch \u043D\u0430 True"
+    taskType: 5
+    referenceCode: "left_claims_exit = True\r\nright_claims_left_trap = True\r\nleft_is_truthful
+      = left_claims_exit and not right_claims_left_trap\r\nif left_is_truthful:\r\n   
+      print(\"\u0418\u0434\u0451\u043C \u0432 \u043B\u0435\u0432\u0443\u044E \u0434\u0432\u0435\u0440\u044C\")\r\nelse:\r\n   
+      print(\"\u0418\u0434\u0451\u043C \u0432 \u043F\u0440\u0430\u0432\u0443\u044E
+      \u0434\u0432\u0435\u0440\u044C\")"
+    expectedString: 
+    variableName: bool_switch
+    expectedNumber: 0
+    expectedBool: 1
+    doorVarLeftClaims: 
+    doorVarRightClaims: 
+    doorVarTruthful: 
+    doorExpectedLeft: 0
+    doorExpectedRight: 0
+    doorPrintIfLeft: 
+    doorPrintIfRight: 
+  aiAdvisor: {fileID: 0}

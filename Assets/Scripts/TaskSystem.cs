@@ -20,6 +20,10 @@ public class TaskSystem : MonoBehaviour
     [Header("AI Helper")]
     [SerializeField] private TaskAIAdvisor aiAdvisor;
 
+    [Header("Визуал после заданий 1 и 2")]
+    [Tooltip("Кристаллы/цветок после заданий с индексом 0 и 1 — настройки на компоненте Task1CompletionVisuals.")]
+    [SerializeField] private Task1CompletionVisuals task1CompletionVisuals;
+
     private int currentTaskIndex = 0;
     private InterpreterEngine engine = new InterpreterEngine();
     private bool waitingForAI = false;
@@ -182,13 +186,22 @@ public class TaskSystem : MonoBehaviour
 
     void OnTaskPassed()
     {
+        int completedTaskIndex = currentTaskIndex;
         currentTaskIndex++;
 
         // Сбрасываем lastPrintedValue для следующего задания
         engine.lastPrintedValue = "";
 
-        // Сообщаем DialogueManager что задание выполнено
-        dialogueManager.OnTaskCompleted();
+        if (task1CompletionVisuals != null)
+        {
+            if (completedTaskIndex == 0 && task1CompletionVisuals.enableForTask1)
+                task1CompletionVisuals.PlayTask1();
+            else if (completedTaskIndex == 1 && task1CompletionVisuals.enableForTask2)
+                task1CompletionVisuals.PlayTask2();
+        }
+
+        // Сообщаем DialogueManager что задание выполнено (после 1-го — пауза без панели, см. DialogueManager)
+        dialogueManager.OnTaskCompleted(completedTaskIndex == 0);
     }
 
     bool CheckTaskAgainstReference(TaskData task, InterpreterEngine snapshotBefore)
