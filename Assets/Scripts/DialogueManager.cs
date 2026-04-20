@@ -56,6 +56,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool playerFlipXFacesRight = true;
     [SerializeField] private bool guideFlipXFacesRight = true;
 
+    [Header("Mana Challenge System")]
+    [SerializeField] private ManaUI manaUI;
+    [SerializeField] private WeedAnimationController[] weedAnimations; // Массив сорняков
+
+    [Header("Level Progress System")]
+    [SerializeField] private LevelProgressUI levelProgressUI;
+
     private DialogueLine[] lines;
     private int index;
     private bool isActive;
@@ -77,6 +84,7 @@ public class DialogueManager : MonoBehaviour
     private Coroutine taskObjectUICoroutine;
     private Coroutine chapterCompleteUICoroutine;
     private Coroutine firstTaskDialogueResumeCoroutine;
+    private bool currentTaskIsManaChallenge = false;
 
     private void Awake()
     {
@@ -126,6 +134,24 @@ public class DialogueManager : MonoBehaviour
 
         ClearTaskObjectUI(destroyLinkedObject: false);
 
+        // Инициализируем прогресс уровня
+        if (levelProgressUI != null)
+        {
+            // Подсчитываем количество заданий в диалоге
+            int totalTasks = 0;
+            foreach (var line in dialogueLines)
+            {
+                if (line.startTaskAfterLine)
+                    totalTasks++;
+            }
+
+            if (totalTasks > 0)
+            {
+                levelProgressUI.SetTotalTasks(totalTasks);
+                levelProgressUI.Show();
+            }
+        }
+
         ShowLine();
     }
 
@@ -162,6 +188,15 @@ public class DialogueManager : MonoBehaviour
         if (!isActive) return;
 
         ClearTaskObjectUI(destroyLinkedObject: true);
+
+        // Убрали автоматическую гибель сорняков при выполнении задания
+        // Теперь сорняки гибнут ТОЛЬКО при галочке startWeedsDeath на нужной фразе
+
+        // Увеличиваем прогресс уровня
+        if (levelProgressUI != null)
+        {
+            levelProgressUI.CompleteTask();
+        }
 
         // Выходим из taskMode
         taskMode = false;
@@ -307,6 +342,31 @@ public class DialogueManager : MonoBehaviour
         if (line.startTaskAfterLine)
             ActivateTaskMode();
 
+        // Запускаем рост сорняков, если указано (вне режима задания)
+        if (line.startWeedsGrowth && !line.startTaskAfterLine)
+        {
+            Debug.Log($"DialogueManager: startWeedsGrowth=true, запускаем рост сорняков. Количество: {weedAnimations?.Length ?? 0}");
+            if (weedAnimations != null && weedAnimations.Length > 0)
+            {
+                foreach (var weed in weedAnimations)
+                {
+                    if (weed != null)
+                    {
+                        Debug.Log($"DialogueManager: Вызываем PlayGrowAnimation на {weed.gameObject.name}");
+                        weed.PlayGrowAnimation();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("DialogueManager: Один из сорняков = null!");
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("DialogueManager: weedAnimations пуст или null!");
+            }
+        }
+
         // Кинематическое движение персонажей по этой реплике
         if (line.moveCharacters)
             StartCoroutine(MoveCharactersToTargets(line));
@@ -332,6 +392,50 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
+
+        // Уменьшаем ману после завершения печати фразы (если это испытание с маной)
+        if (currentTaskIsManaChallenge && index < lines.Length)
+        {
+            DialogueLine currentLine = lines[index];
+            if (currentLine.manaDecreaseAmount > 0 && manaUI != null)
+            {
+                manaUI.DecreaseMana(currentLine.manaDecreaseAmount);
+            }
+        }
+
+        // Запускаем гибель сорняков, если указано
+        if (index < lines.Length)
+        {
+            DialogueLine currentLine = lines[index];
+            if (currentLine.startWeedsDeath)
+            {
+                if (weedAnimations != null && weedAnimations.Length > 0)
+                {
+                    foreach (var weed in weedAnimations)
+                    {
+                        if (weed != null)
+                            weed.PlayDeathAnimation();
+                    }
+                }
+            }
+
+            // Скрываем окно диалога на указанное время, если галочка активна
+            if (currentLine.hideDialogueWindow && dialoguePanel != null)
+            {
+                StartCoroutine(HideDialogueWindowTemporarily(currentLine.hideDialogueWindowDuration));
+            }
+        }
+    }
+
+    private IEnumerator HideDialogueWindowTemporarily(float duration)
+    {
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        yield return new WaitForSeconds(duration);
+
+        if (dialoguePanel != null && isActive)
+            dialoguePanel.SetActive(true);
     }
 
     private void ActivateTaskMode()
@@ -383,6 +487,30 @@ public class DialogueManager : MonoBehaviour
 
         // Телепортируем только если на этой реплике включён телепорт
         DialogueLine line = lines[index];
+
+        // Проверяем, является ли это испытанием с маной
+        currentTaskIsManaChallenge = line.isManaChallenge;
+
+        if (currentTaskIsManaChallenge)
+        {
+            // Показываем UI маны
+            if (manaUI != null)
+                manaUI.Show();
+        }
+
+        // Запускаем рост сорняков, если указано
+        if (line.startWeedsGrowth)
+        {
+            if (weedAnimations != null && weedAnimations.Length > 0)
+            {
+                foreach (var weed in weedAnimations)
+                {
+                    if (weed != null)
+                        weed.PlayGrowAnimation();
+                }
+            }
+        }
+
         if (line.teleportPlayers)
         {
             // Телепорт игрока
@@ -665,6 +793,25 @@ public class DialogueManager : MonoBehaviour
         {
             StopCoroutine(firstTaskDialogueResumeCoroutine);
             firstTaskDialogueResumeCoroutine = null;
+        }
+
+        // Сбрасываем состояние испытания с маной
+        if (currentTaskIsManaChallenge)
+        {
+            if (manaUI != null)
+                manaUI.Hide();
+
+            // Сбрасываем ВСЕ сорняки
+            if (weedAnimations != null && weedAnimations.Length > 0)
+            {
+                foreach (var weed in weedAnimations)
+                {
+                    if (weed != null)
+                        weed.ResetWeed();
+                }
+            }
+
+            currentTaskIsManaChallenge = false;
         }
 
         isActive = false;

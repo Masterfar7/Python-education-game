@@ -449,6 +449,175 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3143797348941253441, guid: d8ca2036ed4aae7458411995b40a6155, type: 3}
   m_PrefabInstance: {fileID: 43957531}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &64081186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64081189}
+  - component: {fileID: 64081188}
+  - component: {fileID: 64081187}
+  m_Layer: 0
+  m_Name: weed1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &64081187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64081186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28792230353d848a141644e1bfcfb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growDuration: 2
+  growSprites:
+  - {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 930439230895538243, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -423793625423861745, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2180248418079366021, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 3018862307881957991, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2361718465009808997, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2641445295635537693, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenGrowSprites: 0.3
+  targetScale: {x: 2.2, y: 2.2, z: 2.2}
+  growCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathDuration: 1.5
+  deathSprites:
+  - {fileID: 6405179829818921212, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 5380259321201847840, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 1745503270856842658, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 618985511, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -5412569224878583265, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenDeathSprites: 0.3
+  deathCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathColor: {r: 0.5, g: 0.3, b: 0.1, a: 1}
+  spriteRenderer: {fileID: 64081188}
+--- !u!212 &64081188
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64081186}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.62, y: 0.78}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &64081189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64081186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.12, y: -19, z: 0.07179411}
+  m_LocalScale: {x: 2.14, y: 2.14, z: 2.14}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &73226939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -616,7 +785,7 @@ GameObject:
   - component: {fileID: 97690978}
   - component: {fileID: 97690977}
   m_Layer: 0
-  m_Name: c91a9394-b2f2-4094-8224-d21c9bfafa48-Photoroom_33
+  m_Name: crystal1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -779,6 +948,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2055291625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &109870198 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7086885946216155887, guid: 0124dbd0145e3e64fa15f4fc99baf588, type: 3}
+  m_PrefabInstance: {fileID: 1951369773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &183931307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +2024,109 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4165655447869070131, guid: 6391fb7fbfb4b6b45bc176d27816208d, type: 3}
   m_PrefabInstance: {fileID: 330520544}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &357227635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 357227639}
+  - component: {fileID: 357227638}
+  - component: {fileID: 357227637}
+  - component: {fileID: 357227636}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &357227636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357227635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &357227637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357227635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &357227638
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357227635}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &357227639
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357227635}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 778029147}
+  - {fileID: 1845760738}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &373498005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2102,6 +2379,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &395859802 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1193048526989187403, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+  m_PrefabInstance: {fileID: 1086792514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &408026865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3271,7 +3553,7 @@ GameObject:
   - component: {fileID: 600649458}
   - component: {fileID: 600649457}
   m_Layer: 0
-  m_Name: c91a9394-b2f2-4094-8224-d21c9bfafa48-Photoroom_0
+  m_Name: flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3445,7 +3727,7 @@ PrefabInstance:
       objectReference: {fileID: 1403375323}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
       propertyPath: tasks.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
       propertyPath: task1CompletionVisuals
@@ -3460,7 +3742,15 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
+      propertyPath: tasks.Array.data[2].taskType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
       propertyPath: tasks.Array.data[0].variableName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
+      propertyPath: tasks.Array.data[2].variableName
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
@@ -3475,8 +3765,19 @@ PrefabInstance:
         crystal, \"\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\")\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
+      propertyPath: tasks.Array.data[2].referenceCode
+      value: "mana = 100\r\nwhile mana > 0:\r\n    mana = mana - 15\r\n    print(\"\u0427\u0438\u0442\u0430\u0435\u0442
+        \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435. \u041E\u0441\u0442\u0430\u043B\u043E\u0441\u044C
+        \u043C\u0430\u043D\u044B:\", mana)\r\nprint(\"\u041C\u0430\u043D\u0430 \u043A\u043E\u043D\u0447\u0438\u043B\u0430\u0441\u044C.
+        \u0421\u043E\u0440\u043D\u044F\u043A\u0438 \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B\u0438.\")\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
       propertyPath: tasks.Array.data[1].expectedString
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
+      propertyPath: tasks.Array.data[2].expectedNumber
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
       propertyPath: tasks.Array.data[0].taskDescription
@@ -3493,6 +3794,16 @@ PrefabInstance:
         \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439 \u0446\u0438\u043A\u043B
         for, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0439\u0442\u0438\u0441\u044C
         \u043F\u043E \u043A\u0430\u0436\u0434\u043E\u043C\u0443."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861933865349509865, guid: a359258f753d7d84a9406f8bcaa00956, type: 3}
+      propertyPath: tasks.Array.data[2].taskDescription
+      value: "\u0421\u043A\u0435\u043B\u0435\u0442:  mana = 100 while mana > 0:    
+        # \u043D\u0430\u043D\u0435\u0441\u0442\u0438 \u0443\u0434\u0430\u0440    
+        mana = mana - 15     print(\"\u0421\u043E\u0440\u043D\u044F\u043A \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D.
+        \u041E\u0441\u0442\u0430\u043B\u043E\u0441\u044C \u043C\u0430\u043D\u044B:\",
+        mana)  \u041F\u043E\u0441\u043B\u0435 \u0446\u0438\u043A\u043B\u0430 \u0432\u044B\u0432\u0435\u0434\u0438:
+        \xAB\u041C\u0430\u043D\u0430 \u043A\u043E\u043D\u0447\u0438\u043B\u0430\u0441\u044C.
+        \u0421\u043E\u0440\u043D\u044F\u043A\u0438 \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B\u0438.\xBB "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3734,6 +4045,175 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3143797348941253441, guid: d8ca2036ed4aae7458411995b40a6155, type: 3}
   m_PrefabInstance: {fileID: 642402787}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &643090584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 643090587}
+  - component: {fileID: 643090586}
+  - component: {fileID: 643090585}
+  m_Layer: 0
+  m_Name: weed1 (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &643090585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643090584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28792230353d848a141644e1bfcfb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growDuration: 2
+  growSprites:
+  - {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 930439230895538243, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -423793625423861745, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2180248418079366021, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 3018862307881957991, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2361718465009808997, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2641445295635537693, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenGrowSprites: 0.3
+  targetScale: {x: 2.2, y: 2.2, z: 2.2}
+  growCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathDuration: 1.5
+  deathSprites:
+  - {fileID: 6405179829818921212, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 5380259321201847840, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 1745503270856842658, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 618985511, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -5412569224878583265, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenDeathSprites: 0.3
+  deathCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathColor: {r: 0.5, g: 0.3, b: 0.1, a: 1}
+  spriteRenderer: {fileID: 643090586}
+--- !u!212 &643090586
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643090584}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.62, y: 0.78}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &643090587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643090584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.28, y: -28.84, z: 0.07179411}
+  m_LocalScale: {x: 2.14, y: 2.14, z: 2.14}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &646319229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,6 +5066,82 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4482090684794263068, guid: 08bfddc6584e75c48a33bf68ed9fb1e9, type: 3}
   m_PrefabInstance: {fileID: 751483489}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &778029146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778029147}
+  - component: {fileID: 778029149}
+  - component: {fileID: 778029148}
+  m_Layer: 5
+  m_Name: ManaUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &778029147
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778029146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1097403753}
+  - {fileID: 1225180286}
+  m_Father: {fileID: 357227639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1235, y: -636}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &778029148
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778029146}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &778029149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778029146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ad45ddee7fa114387017cd0d7c8d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaFillRect: {fileID: 1225180286}
+  manaFillImage: {fileID: 1225180287}
+  manaBackgroundImage: {fileID: 1097403754}
+  canvasGroup: {fileID: 778029148}
+  maxMana: 100
+  manaDecreasePerLine: 10
+  maxFillWidth: 200
+  fadeInDuration: 0.5
+  fadeOutDuration: 0.5
+  manaDecreaseAnimDuration: 0.3
+  fullManaColor: {r: 0, g: 1, b: 1, a: 1}
+  halfManaColor: {r: 0, g: 1, b: 1, a: 1}
+  lowManaColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1001 &786764237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4750,7 +5306,7 @@ GameObject:
   - component: {fileID: 796524758}
   - component: {fileID: 796524757}
   m_Layer: 0
-  m_Name: c91a9394-b2f2-4094-8224-d21c9bfafa48-Photoroom_33 (2)
+  m_Name: crystal3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5242,6 +5798,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5750527997494203856, guid: e0aadbb15c6cf1246b4e171a178b0a53, type: 3}
   m_PrefabInstance: {fileID: 934559210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &971095292 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+  m_PrefabInstance: {fileID: 1086792514}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1003536842
 GameObject:
@@ -5909,6 +6470,115 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2055291625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1086792514
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 109870198}
+    m_Modifications:
+    - target: {fileID: 1193048526989187403, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_Name
+      value: EndOfChapter2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193048526989187403, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060632435167150956, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1021902283808478741, guid: 0f8b4aabcc4aa8440a076c8f409bb870, type: 3}
+    - target: {fileID: 7856796881961349241, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Chapter3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344270959648570034, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4eee22cb9259081428ee7b24ec9aa78c, type: 3}
 --- !u!1 &1097334813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5996,6 +6666,81 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1097403752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097403753}
+  - component: {fileID: 1097403755}
+  - component: {fileID: 1097403754}
+  m_Layer: 5
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1097403753
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097403752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.25, y: 1.45, z: 1.45}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 778029147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1078, y: 591}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1097403754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097403752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -9193859250417688138, guid: a9fbbd680da73494cbc4ac2aed7d9af1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1097403755
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097403752}
+  m_CullTransparentMesh: 1
 --- !u!1 &1166705492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6431,6 +7176,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2055291625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1225180285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225180286}
+  - component: {fileID: 1225180288}
+  - component: {fileID: 1225180287}
+  m_Layer: 5
+  m_Name: Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1225180286
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225180285}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.2, y: 1.77, z: 1.45}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 778029147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -1158.8004, y: 591.1333}
+  m_SizeDelta: {x: 62.2325, y: 20.3949}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1225180287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225180285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1871852431343309923, guid: 55460e33974c9c4449a35e48ffee9f0d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1225180288
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225180285}
+  m_CullTransparentMesh: 1
 --- !u!1 &1230175508
 GameObject:
   m_ObjectHideFlags: 0
@@ -7129,7 +7949,7 @@ GameObject:
   - component: {fileID: 1303212698}
   - component: {fileID: 1303212697}
   m_Layer: 0
-  m_Name: c91a9394-b2f2-4094-8224-d21c9bfafa48-Photoroom_33 (3)
+  m_Name: crystal4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7896,6 +8716,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1530079332}
     - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: manaUI
+      value: 
+      objectReference: {fileID: 778029149}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1452499357}
@@ -7940,9 +8764,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452499356}
     - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: levelProgressUI
+      value: 
+      objectReference: {fileID: 1845760740}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
       propertyPath: interpreterCanvas
       value: 
       objectReference: {fileID: 437446642}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: weedAnimations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: 'weedAnimations.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1470972260}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: 'weedAnimations.Array.data[1]'
+      value: 
+      objectReference: {fileID: 64081187}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: 'weedAnimations.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1474768273}
+    - target: {fileID: 5224718993555020940, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
+      propertyPath: 'weedAnimations.Array.data[3]'
+      value: 
+      objectReference: {fileID: 643090585}
     - target: {fileID: 7323941671920275947, guid: 86609bfe9cf542341be4f0144c3bc450, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -8452,6 +9300,344 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1470972259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470972262}
+  - component: {fileID: 1470972261}
+  - component: {fileID: 1470972260}
+  m_Layer: 0
+  m_Name: weed1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1470972260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470972259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28792230353d848a141644e1bfcfb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growDuration: 2
+  growSprites:
+  - {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 930439230895538243, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -423793625423861745, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2180248418079366021, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 3018862307881957991, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2361718465009808997, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2641445295635537693, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenGrowSprites: 0.3
+  targetScale: {x: 2.2, y: 2.2, z: 2.2}
+  growCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathDuration: 1.5
+  deathSprites:
+  - {fileID: 6405179829818921212, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 5380259321201847840, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 1745503270856842658, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 618985511, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -5412569224878583265, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenDeathSprites: 0.3
+  deathCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathColor: {r: 0.5, g: 0.3, b: 0.1, a: 1}
+  spriteRenderer: {fileID: 1470972261}
+--- !u!212 &1470972261
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470972259}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.62, y: 0.78}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1470972262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470972259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -51.42, y: -25.15, z: 0.07179411}
+  m_LocalScale: {x: 2.14, y: 2.14, z: 2.14}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1474768272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474768275}
+  - component: {fileID: 1474768274}
+  - component: {fileID: 1474768273}
+  m_Layer: 0
+  m_Name: weed1 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1474768273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474768272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28792230353d848a141644e1bfcfb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growDuration: 2
+  growSprites:
+  - {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 930439230895538243, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -423793625423861745, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2180248418079366021, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 3018862307881957991, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2361718465009808997, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -2641445295635537693, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenGrowSprites: 0.3
+  targetScale: {x: 2.2, y: 2.2, z: 2.2}
+  growCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathDuration: 1.5
+  deathSprites:
+  - {fileID: 6405179829818921212, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 5380259321201847840, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 1745503270856842658, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: 618985511, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  - {fileID: -5412569224878583265, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  timeBetweenDeathSprites: 0.3
+  deathCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  deathColor: {r: 0.5, g: 0.3, b: 0.1, a: 1}
+  spriteRenderer: {fileID: 1474768274}
+--- !u!212 &1474768274
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474768272}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3848717574444160857, guid: 525bdda6bec56c04289e8ade74590f94, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.62, y: 0.78}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1474768275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474768272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -42.86, y: -24.23, z: 0.07179411}
+  m_LocalScale: {x: 2.14, y: 2.14, z: 2.14}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477164441
 GameObject:
   m_ObjectHideFlags: 0
@@ -8749,6 +9935,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7679865648373853695, guid: 3d0adeb091687ea4d996b313bc9fd46f, type: 3}
   m_PrefabInstance: {fileID: 1506906456}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1513050217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1513050218}
+  - component: {fileID: 1513050220}
+  - component: {fileID: 1513050219}
+  m_Layer: 5
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1513050218
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513050217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.3170733, y: 0.4, z: 1.4146341}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1845760738}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 144.1, y: 496}
+  m_SizeDelta: {x: 100, y: 192.6}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1513050219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513050217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -5578833671740995208, guid: 977eda06d4e9e494088f471e8d28474f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1513050220
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513050217}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1527314673
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8969,6 +10230,10 @@ MonoBehaviour:
       \u043F\u043E \u043A\u0440\u0443\u0433\u0443, \u0437\u0435\u043C\u043B\u044F
       \u0432 \u0441\u043E\u0440\u043D\u044F\u043A\u0430\u0445.)\r\n"
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -8991,6 +10256,8 @@ MonoBehaviour:
     moveSpeedOverride: 10
     playerMoveSpeed: 10
     guideMoveSpeed: 10
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 1
     text: "\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C
       \u0432 \u0421\u0430\u0434 \u0412\u0435\u0447\u043D\u043E\u0433\u043E \u0426\u0432\u0435\u0442\u0435\u043D\u0438\u044F.
@@ -9000,6 +10267,10 @@ MonoBehaviour:
       \u043D\u0435 \u0433\u043E\u0440\u044F\u0442, \u0430 \u0441\u043E\u0440\u043D\u044F\u043A\u0438
       \u0437\u0430\u043F\u043E\u043B\u043E\u043D\u044F\u0442 \u0432\u0441\u0451."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9020,11 +10291,17 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "(\u043E\u0433\u043B\u044F\u0434\u044B\u0432\u0430\u0435\u0442\u0441\u044F)
       \u0426\u0438\u043A\u043B\u044B? \u041A\u0430\u043A \u0432 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438?
       \u041D\u0443, for, while\u2026 \u0437\u0432\u0443\u0447\u0438\u0442 \u0441\u043A\u0443\u0447\u043D\u043E\u0432\u0430\u0442\u043E."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9045,11 +10322,17 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "\u0421\u043A\u0443\u0447\u043D\u043E? \u0421\u0435\u0439\u0447\u0430\u0441
       \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u043C. \u041D\u0430\u0447\u043D\u0451\u043C
       \u0441 \u043C\u0430\u043B\u043E\u0433\u043E."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9070,6 +10353,8 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "\u0427\u0442\u043E\u0431\u044B \u043E\u0436\u0438\u0432\u0438\u0442\u044C
       \u0446\u0432\u0435\u0442\u043E\u043A, \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u044C
@@ -9078,6 +10363,10 @@ MonoBehaviour:
       \u043C\u0435\u043D\u044C\u0448\u0435. \u0422\u0432\u043E\u0439 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442
       \u2014 \u0446\u0438\u043A\u043B for."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9098,6 +10387,8 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 1
     text: "\u0412\u043E\u0442 \u0441\u043A\u0435\u043B\u0435\u0442. \u0417\u0430\u043F\u043E\u043B\u043D\u0438
       \u043F\u0440\u043E\u043F\u0443\u0441\u043A:\r\nfor i in range(___):\r\n   
@@ -9105,6 +10396,10 @@ MonoBehaviour:
       \u0427\u0438\u0441\u043B\u043E \u0432 range() \u2014 \u0441\u043A\u043E\u043B\u044C\u043A\u043E
       \u0440\u0430\u0437 \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u044C.\r\n"
     startTaskAfterLine: 1
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9125,11 +10420,17 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "\u041E\u0433\u043E! \u041E\u043D \u0446\u0432\u0435\u0442\u0451\u0442!
       \u041F\u0440\u043E\u0441\u0442\u043E 5 \u0440\u0430\u0437 \u043F\u043E\u0434\u0440\u044F\u0434
       \u2014 \u0438 \u0432\u0441\u0451?"
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9150,10 +10451,16 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "\u0414\u0430. \u042D\u0442\u043E \u0441\u0438\u043B\u0430 \u043F\u043E\u0432\u0442\u043E\u0440\u0435\u043D\u0438\u044F
       \u0431\u0435\u0437 \u0441\u043A\u0443\u043A\u0438."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9174,10 +10481,16 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 0
     text: "\u0414\u0430. \u042D\u0442\u043E \u0441\u0438\u043B\u0430 \u043F\u043E\u0432\u0442\u043E\u0440\u0435\u043D\u0438\u044F
       \u0431\u0435\u0437 \u0441\u043A\u0443\u043A\u0438."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9198,12 +10511,18 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 1
     text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043E\u0431\u043E\u0439\u0434\u0438
       \u043A\u0440\u0443\u0433 \u0438 \u0437\u0430\u0440\u044F\u0434\u0438 \u043A\u0430\u0436\u0434\u044B\u0439
       \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B. \u0423 \u043D\u0430\u0441
       \u0435\u0441\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0439."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9224,6 +10543,8 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 1
     text: "\u0421\u043E\u0437\u0434\u0430\u0439 \u0441\u043F\u0438\u0441\u043E\u043A
       crystals = [\"red\", \"blue\", \"green\", \"yellow\"]. \u0410 \u0437\u0430\u0442\u0435\u043C
@@ -9231,6 +10552,10 @@ MonoBehaviour:
       for, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0439\u0442\u0438\u0441\u044C
       \u043F\u043E \u043A\u0430\u0436\u0434\u043E\u043C\u0443."
     startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9251,11 +10576,17 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
   - speaker: 1
     text: "\u0421\u043A\u0435\u043B\u0435\u0442:  crystals = [\"red\", \"blue\",
       \"green\", \"yellow\"] for crystal in crystals:     print(\"\u0417\u0430\u0440\u044F\u0436\u0430\u044E\",
       crystal, \"\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\") "
     startTaskAfterLine: 1
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
     showTaskObjectUIAfterText: 0
     taskObjectUI: {fileID: 0}
     showChapterCompleteUIAfterText: 0
@@ -9276,6 +10607,553 @@ MonoBehaviour:
     moveSpeedOverride: 0
     playerMoveSpeed: 0
     guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u041F\u0440\u043E\u0448\u0451\u043B\u0441\u044F \u043F\u043E \u043A\u0430\u0436\u0434\u043E\u043C\u0443
+      \u2014 \u0438 \u0433\u043E\u0442\u043E\u0432\u043E. \u0410 \u0435\u0441\u043B\u0438
+      \u0431\u044B \u0438\u0445 \u0431\u044B\u043B\u043E \u0441\u0442\u043E?"
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u0426\u0438\u043A\u043B \u0431\u044B \u0432\u0441\u0451 \u0440\u0430\u0432\u043D\u043E
+      \u0441\u0434\u0435\u043B\u0430\u043B \u0432\u0441\u044E \u0440\u0430\u0431\u043E\u0442\u0443.
+      \u042D\u0442\u043E \u043C\u0430\u0433\u0438\u044F \u043F\u0435\u0440\u0435\u0431\u043E\u0440\u0430."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 10
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C.
+      \u0421\u043E\u0440\u043D\u044F\u043A\u0438 \u043B\u0435\u0437\u0443\u0442,
+      \u043F\u043E\u043A\u0430 \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C
+      \u043C\u0430\u043D\u0430. \u041D\u0430\u0447\u0430\u043B\u044C\u043D\u044B\u0439
+      \u0437\u0430\u043F\u0430\u0441 \u2014 100. \u041A\u0430\u0436\u0434\u044B\u0439
+      \u0443\u0434\u0430\u0440 \u043E\u0442\u043D\u0438\u043C\u0430\u0435\u0442 15
+      \u043C\u0430\u043D\u044B \u0438 \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0430\u0435\u0442
+      \u043E\u0434\u0438\u043D \u0441\u043E\u0440\u043D\u044F\u043A."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 1
+    startWeedsDeath: 0
+    manaDecreaseAmount: 0
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u041D\u0443\u0436\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C
+      \u0446\u0438\u043A\u043B while \u2014 \u043E\u043D \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442,
+      \u043F\u043E\u043A\u0430 \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0438\u0441\u0442\u0438\u043D\u043D\u043E."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 0
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u0421\u043A\u0435\u043B\u0435\u0442:  mana = 100 while mana > 0:    
+      # \u043D\u0430\u043D\u0435\u0441\u0442\u0438 \u0443\u0434\u0430\u0440     mana
+      = mana - 15     print(\"\u0421\u043E\u0440\u043D\u044F\u043A \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D.
+      \u041E\u0441\u0442\u0430\u043B\u043E\u0441\u044C \u043C\u0430\u043D\u044B:\",
+      mana)  \u041F\u043E\u0441\u043B\u0435 \u0446\u0438\u043A\u043B\u0430 \u0432\u044B\u0432\u0435\u0434\u0438:
+      \xAB\u041C\u0430\u043D\u0430 \u043A\u043E\u043D\u0447\u0438\u043B\u0430\u0441\u044C.
+      \u0421\u043E\u0440\u043D\u044F\u043A\u0438 \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B\u0438.\xBB "
+    startTaskAfterLine: 1
+    isManaChallenge: 1
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 0
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0427\u0438\u0442\u0430\u0435\u0442 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0427\u0438\u0442\u0430\u0435\u0442 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0427\u0438\u0442\u0430\u0435\u0442 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0427\u0438\u0442\u0430\u0435\u0442 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 0
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0427\u0438\u0442\u0430\u0435\u0442 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u0410 \u0435\u0441\u043B\u0438 \u044F \u0445\u043E\u0447\u0443, \u0447\u0442\u043E\u0431\u044B
+      \u0443\u0434\u0430\u0440 \u0442\u0440\u0430\u0442\u0438\u043B \u043C\u0430\u043D\u0443
+      \u0442\u043E\u043B\u044C\u043A\u043E \u0435\u0441\u043B\u0438 \u0435\u0451
+      \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E?"
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 0
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u041C\u043E\u0436\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C
+      \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0443 \u0432\u043D\u0443\u0442\u0440\u0438.
+      \u041D\u043E \u044D\u0442\u043E \u0443\u0436\u0435 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C. \u0421\u0435\u0439\u0447\u0430\u0441
+      \u0442\u044B \u043F\u043E\u043D\u044F\u043B \u0433\u043B\u0430\u0432\u043D\u043E\u0435:
+      while \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442, \u043F\u043E\u043A\u0430
+      \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0438\u0441\u0442\u0438\u043D\u043D\u043E."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 1
+    text: "\u0422\u044B \u043E\u0441\u0432\u043E\u0438\u043B \u0446\u0438\u043A\u043B\u044B.
+      for \u2014 \u0434\u043B\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u0435\u043D\u0438\u0439
+      \u043F\u043E \u0441\u0447\u0451\u0442\u0447\u0438\u043A\u0443 \u0438\u043B\u0438
+      \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438. while \u2014 \u043F\u043E\u043A\u0430
+      \u0432\u0435\u0440\u043D\u043E \u0443\u0441\u043B\u043E\u0432\u0438\u0435.
+      \u0422\u0435\u043F\u0435\u0440\u044C \u0441\u0430\u0434 \u0431\u0443\u0434\u0435\u0442
+      \u0446\u0432\u0435\u0441\u0442\u0438 \u0432\u0435\u0447\u043D\u043E."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 0
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u041C\u043E\u0436\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C
+      \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0443 \u0432\u043D\u0443\u0442\u0440\u0438.
+      \u041D\u043E \u044D\u0442\u043E \u0443\u0436\u0435 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C. \u0421\u0435\u0439\u0447\u0430\u0441
+      \u0442\u044B \u043F\u043E\u043D\u044F\u043B \u0433\u043B\u0430\u0432\u043D\u043E\u0435:
+      while \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442, \u043F\u043E\u043A\u0430
+      \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0438\u0441\u0442\u0438\u043D\u043D\u043E."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "(\u0432\u043D\u0443\u0442\u0440\u0435\u043D\u043D\u0438\u0439 \u043C\u043E\u043D\u043E\u043B\u043E\u0433)
+      \u0426\u0438\u043A\u043B\u044B \u043E\u043A\u0430\u0437\u0430\u043B\u0438\u0441\u044C
+      \u043D\u0435 \u0442\u0430\u043A\u0438\u043C\u0438 \u0443\u0436 \u0441\u043A\u0443\u0447\u043D\u044B\u043C\u0438.
+      \u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E \u043A\u043E\u0433\u0434\u0430
+      \u0441\u043E\u0440\u043D\u044F\u043A\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E
+      \u0438\u0441\u0447\u0435\u0437\u0430\u044E\u0442."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "\u041D\u0430\u0434\u043E \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043F\u043E\u043C\u043D\u0438\u0442\u044C:
+      for \u0434\u043B\u044F \u043F\u0435\u0440\u0435\u0431\u043E\u0440\u0430, while
+      \u0434\u043B\u044F \xAB\u043F\u043E\u043A\u0430 \u043D\u0435 \u043D\u0430\u0434\u043E\u0435\u0441\u0442\xBB."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 0
+    chapterCompleteUI: {fileID: 0}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
+  - speaker: 0
+    text: "(\u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F) \u0412 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439
+      \u0433\u043B\u0430\u0432\u0435 \u2014 \u0432\u043B\u043E\u0436\u0435\u043D\u043D\u044B\u0435
+      \u0446\u0438\u043A\u043B\u044B. \u0422\u0430\u043C \u0442\u044B \u0431\u0443\u0434\u0435\u0448\u044C
+      \u0440\u0438\u0441\u043E\u0432\u0430\u0442\u044C \u0443\u0437\u043E\u0440\u044B
+      \u0438 \u0437\u0430\u043F\u043E\u043B\u043D\u044F\u0442\u044C \u0442\u0430\u0431\u043B\u0438\u0446\u044B.
+      \u0410 \u043F\u043E\u043A\u0430 \u2014 \u043E\u0442\u0434\u044B\u0445\u0430\u0439."
+    startTaskAfterLine: 0
+    isManaChallenge: 0
+    startWeedsGrowth: 0
+    startWeedsDeath: 1
+    manaDecreaseAmount: 20
+    showTaskObjectUIAfterText: 0
+    taskObjectUI: {fileID: 0}
+    showChapterCompleteUIAfterText: 1
+    chapterCompleteUI: {fileID: 395859802}
+    triggerStatueFlash: 0
+    enableFirstStatueAura: 0
+    enableSecondStatueAura: 0
+    teleportPlayers: 0
+    playerTeleportTarget: {fileID: 0}
+    guideTeleportTarget: {fileID: 0}
+    moveCharacters: 0
+    playerMoveTarget: {fileID: 0}
+    guideMoveTarget: {fileID: 0}
+    playerPath: []
+    guidePath: []
+    activateLever: 0
+    leverToActivate: {fileID: 0}
+    moveSpeedOverride: 0
+    playerMoveSpeed: 0
+    guideMoveSpeed: 0
+    hideDialogueWindow: 1
+    hideDialogueWindowDuration: 2
   charactersWalk: 0
   playerWalkPath: []
   guideWalkPath: []
@@ -10635,6 +12513,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5750527997494203856, guid: e0aadbb15c6cf1246b4e171a178b0a53, type: 3}
   m_PrefabInstance: {fileID: 1781282341}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1845760737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1845760738}
+  - component: {fileID: 1845760740}
+  - component: {fileID: 1845760739}
+  m_Layer: 5
+  m_Name: LevelProgressUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1845760738
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845760737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1513050218}
+  - {fileID: 1888174588}
+  m_Father: {fileID: 357227639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1845760739
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845760737}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1845760740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845760737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0868826bd1c503240a598b1feba6b361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressFillRect: {fileID: 1888174588}
+  progressFillImage: {fileID: 1888174589}
+  progressBackgroundImage: {fileID: 1513050219}
+  canvasGroup: {fileID: 1845760739}
+  totalTasks: 3
+  maxFillWidth: 200
+  fadeInDuration: 0.5
+  fadeOutDuration: 0.5
+  progressIncreaseAnimDuration: 0.5
 --- !u!1 &1848223037
 GameObject:
   m_ObjectHideFlags: 0
@@ -10646,7 +12596,7 @@ GameObject:
   - component: {fileID: 1848223039}
   - component: {fileID: 1848223038}
   m_Layer: 0
-  m_Name: c91a9394-b2f2-4094-8224-d21c9bfafa48-Photoroom_33 (1)
+  m_Name: crystal2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10809,6 +12759,81 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1888174587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888174588}
+  - component: {fileID: 1888174590}
+  - component: {fileID: 1888174589}
+  m_Layer: 5
+  m_Name: Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1888174588
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888174587}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.342373, y: 1.83, z: 1.4991525}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1845760738}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 52.1, y: 493.1}
+  m_SizeDelta: {x: 62.2325, y: 37}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1888174589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888174587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -9048771069398816062, guid: ec6c0791bf76630489a7a24d39411fe0, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1888174590
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888174587}
+  m_CullTransparentMesh: 1
 --- !u!1 &1893640430
 GameObject:
   m_ObjectHideFlags: 0
@@ -11372,7 +13397,10 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4985265690281360831, guid: 0124dbd0145e3e64fa15f4fc99baf588, type: 3}
     - {fileID: 7522047338817282582, guid: 0124dbd0145e3e64fa15f4fc99baf588, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7086885946216155887, guid: 0124dbd0145e3e64fa15f4fc99baf588, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 971095292}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0124dbd0145e3e64fa15f4fc99baf588, type: 3}
 --- !u!114 &1951369774 stripped
@@ -12126,6 +14154,93 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2055291625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2054077847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054077849}
+  - component: {fileID: 2054077848}
+  m_Layer: 0
+  m_Name: 36ff2b7a-ceb4-4640-88ad-700171b3fc09-no-bg-preview (carve.photos)_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &2054077848
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054077847}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -9048771069398816062, guid: ec6c0791bf76630489a7a24d39411fe0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 7.06, y: 1.91}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &2054077849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054077847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 333.98486, y: 984.34467, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2055291624
 GameObject:
   m_ObjectHideFlags: 0
@@ -12547,3 +14662,9 @@ SceneRoots:
   - {fileID: 1977900162}
   - {fileID: 2099000002}
   - {fileID: 1304081152}
+  - {fileID: 357227639}
+  - {fileID: 1470972262}
+  - {fileID: 64081189}
+  - {fileID: 1474768275}
+  - {fileID: 643090587}
+  - {fileID: 2054077849}

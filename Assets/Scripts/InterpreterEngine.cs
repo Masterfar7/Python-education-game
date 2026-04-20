@@ -149,6 +149,82 @@ public class InterpreterEngine
                 continue;
             }
 
+            // Обработка циклов while
+            if (trimmed.StartsWith("while ", System.StringComparison.Ordinal))
+            {
+                Match m = Regex.Match(trimmed, @"^while\s+(.+):$");
+                if (!m.Success)
+                    return false;
+
+                int whileIndent = GetIndent(line);
+                int whileStartLine = i;
+                string condition = m.Groups[1].Value.Trim();
+
+                // Защита от бесконечных циклов
+                int maxIterations = 10000;
+                int iterations = 0;
+
+                while (EvaluateBoolExpr(condition))
+                {
+                    iterations++;
+                    if (iterations > maxIterations)
+                    {
+                        Debug.LogError("InterpreterEngine: Превышен лимит итераций цикла while (10000)");
+                        return false;
+                    }
+
+                    // Выполняем тело цикла
+                    int j = whileStartLine + 1;
+                    while (j < rawLines.Count)
+                    {
+                        string bl = rawLines[j];
+                        string bc = StripComment(bl).TrimEnd();
+                        if (string.IsNullOrWhiteSpace(bc))
+                        {
+                            j++;
+                            continue;
+                        }
+
+                        int ind = GetIndent(bl);
+
+                        // Если отступ меньше или равен отступу while - выходим из тела
+                        if (ind <= whileIndent)
+                            break;
+
+                        // Выполняем строку внутри цикла
+                        if (ind > whileIndent)
+                        {
+                            if (!ExecuteSingle(bc.Trim()))
+                                return false;
+                            anyExecuted = true;
+                        }
+
+                        j++;
+                    }
+                }
+
+                // Пропускаем тело цикла после завершения
+                i++;
+                while (i < rawLines.Count)
+                {
+                    string bl = rawLines[i];
+                    string bc = StripComment(bl).TrimEnd();
+                    if (string.IsNullOrWhiteSpace(bc))
+                    {
+                        i++;
+                        continue;
+                    }
+
+                    int ind = GetIndent(bl);
+                    if (ind <= whileIndent)
+                        break;
+
+                    i++;
+                }
+
+                continue;
+            }
+
             if (trimmed.StartsWith("for ", System.StringComparison.Ordinal))
             {
                 int forIndent = GetIndent(line);

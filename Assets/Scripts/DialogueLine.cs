@@ -11,6 +11,18 @@ public class DialogueLine
 
     public bool startTaskAfterLine;
 
+    [Tooltip("Испытание с маной: показывает UI маны")]
+    public bool isManaChallenge;
+
+    [Tooltip("Запустить рост сорняков на этой фразе")]
+    public bool startWeedsGrowth;
+
+    [Tooltip("Запустить гибель сорняков после этой фразы")]
+    public bool startWeedsDeath;
+
+    [Tooltip("Количество маны, отнимаемое за каждую фразу в испытании с маной (0 = не отнимать на этой фразе)")]
+    public int manaDecreaseAmount = 10;
+
     [Tooltip("После полной печати текста этой реплики показать UI на объекте с DialogueTaskObjectUI.")]
     public bool showTaskObjectUIAfterText;
 
@@ -52,4 +64,8 @@ public class DialogueLine
     // Точная скорость для каждого (если > 0, перекрывает moveSpeedOverride)
     public float playerMoveSpeed = -1f;
     public float guideMoveSpeed = -1f;
+
+    // Скрыть окно диалога на указанное время (в секундах)
+    public bool hideDialogueWindow;
+    public float hideDialogueWindowDuration = 2f;
 }
