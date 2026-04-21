@@ -7,7 +7,17 @@ using UnityEngine;
 public class InterpreterEngine
 {
     public Dictionary<string, object> variables = new Dictionary<string, object>();
+    public Dictionary<string, FunctionDefinition> functions = new Dictionary<string, FunctionDefinition>();
     public string lastPrintedValue = "";
+    private object returnValue = null;
+    private bool hasReturned = false;
+
+    public class FunctionDefinition
+    {
+        public string name;
+        public List<string> parameters;
+        public string body;
+    }
 
     public InterpreterEngine Clone()
     {
@@ -19,6 +29,11 @@ public class InterpreterEngine
                 copy.variables[kv.Key] = new List<object>(lst);
             else
                 copy.variables[kv.Key] = kv.Value;
+        }
+
+        foreach (var kv in functions)
+        {
+            copy.functions[kv.Key] = kv.Value;
         }
 
         return copy;
@@ -44,6 +59,62 @@ public class InterpreterEngine
             }
 
             string trimmed = stripped.TrimStart();
+
+            // Обработка определения функций
+            if (trimmed.StartsWith("def ", System.StringComparison.Ordinal))
+            {
+                Match defMatch = Regex.Match(trimmed, @"^def\s+(\w+)\s*\(([^)]*)\)\s*:\s*$");
+                if (!defMatch.Success)
+                    return false;
+
+                string funcName = defMatch.Groups[1].Value;
+                string paramsStr = defMatch.Groups[2].Value.Trim();
+
+                List<string> parameters = new List<string>();
+                if (!string.IsNullOrWhiteSpace(paramsStr))
+                {
+                    foreach (string param in paramsStr.Split(','))
+                    {
+                        string p = param.Trim();
+                        if (!string.IsNullOrEmpty(p))
+                            parameters.Add(p);
+                    }
+                }
+
+                int defIndent = GetIndent(line);
+                int j = i + 1;
+                while (j < rawLines.Count)
+                {
+                    string bl = rawLines[j];
+                    string bc = StripComment(bl).TrimEnd();
+                    if (string.IsNullOrWhiteSpace(bc))
+                    {
+                        j++;
+                        continue;
+                    }
+
+                    if (GetIndent(bl) <= defIndent)
+                        break;
+                    j++;
+                }
+
+                int bodyStart = i + 1;
+                int bodyEnd = j - 1;
+                string funcBody = BuildDedentBlock(rawLines, bodyStart, bodyEnd);
+                if (funcBody == null)
+                    return false;
+
+                functions[funcName] = new FunctionDefinition
+                {
+                    name = funcName,
+                    parameters = parameters,
+                    body = funcBody
+                };
+
+                anyExecuted = true;
+                i = j;
+                continue;
+            }
 
             if (trimmed.StartsWith("if ", System.StringComparison.Ordinal))
             {
@@ -493,10 +564,67 @@ public class InterpreterEngine
 
     bool ExecuteSingle(string codeLine)
     {
+        // Обработка return
+        if (codeLine.StartsWith("return ", System.StringComparison.Ordinal))
+        {
+            string returnExpr = codeLine.Substring(7).Trim();
+            returnValue = EvaluateRaw(returnExpr);
+            hasReturned = true;
+            return true;
+        }
+
+        // Проверка на вызов функции
+        Match funcCallMatch = Regex.Match(codeLine, @"^(\w+)\s*\(([^)]*)\)$");
+        if (funcCallMatch.Success)
+        {
+            string funcName = funcCallMatch.Groups[1].Value;
+
+            // Если это не print, проверяем пользовательские функции
+            if (funcName != "print" && functions.ContainsKey(funcName))
+            {
+                string argsStr = funcCallMatch.Groups[2].Value.Trim();
+                List<string> argValues = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(argsStr))
+                {
+                    foreach (string arg in SplitTopLevelComma(argsStr))
+                    {
+                        argValues.Add(arg.Trim());
+                    }
+                }
+
+                // Вызываем функцию (результат игнорируется, т.к. нет присваивания)
+                CallFunction(funcName, argValues);
+                return true;
+            }
+        }
+
         Match printMatch = Regex.Match(codeLine, @"^print\s*\((.*)\)$");
         if (printMatch.Success)
         {
             string inside = printMatch.Groups[1].Value.Trim();
+
+            // Проверяем, является ли аргумент вызовом функции
+            Match innerFuncCall = Regex.Match(inside, @"^(\w+)\s*\(([^)]*)\)$");
+            if (innerFuncCall.Success && functions.ContainsKey(innerFuncCall.Groups[1].Value))
+            {
+                string funcName = innerFuncCall.Groups[1].Value;
+                string argsStr = innerFuncCall.Groups[2].Value.Trim();
+                List<string> argValues = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(argsStr))
+                {
+                    foreach (string arg in SplitTopLevelComma(argsStr))
+                    {
+                        argValues.Add(arg.Trim());
+                    }
+                }
+
+                object result = CallFunction(funcName, argValues);
+                lastPrintedValue = ValueToPrintString(result);
+                return true;
+            }
+
             List<string> argStrings = SplitTopLevelComma(inside);
             if (argStrings.Count == 1)
             {
@@ -524,6 +652,26 @@ public class InterpreterEngine
             string varName = assignMatch.Groups[1].Value;
             string valueExpression = assignMatch.Groups[2].Value;
 
+            // Проверяем, является ли значение вызовом функции
+            Match funcCall = Regex.Match(valueExpression, @"^(\w+)\s*\(([^)]*)\)$");
+            if (funcCall.Success && functions.ContainsKey(funcCall.Groups[1].Value))
+            {
+                string funcName = funcCall.Groups[1].Value;
+                string argsStr = funcCall.Groups[2].Value.Trim();
+                List<string> argValues = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(argsStr))
+                {
+                    foreach (string arg in SplitTopLevelComma(argsStr))
+                    {
+                        argValues.Add(arg.Trim());
+                    }
+                }
+
+                variables[varName] = CallFunction(funcName, argValues);
+                return true;
+            }
+
             object value = EvaluateRaw(valueExpression);
             variables[varName] = value;
             return true;
@@ -537,6 +685,13 @@ public class InterpreterEngine
         expr = expr.Trim();
         if (expr.Length == 0)
             return "";
+
+        // Поддержка f-строк
+        if (expr.StartsWith("f\"") && expr.EndsWith("\"") || expr.StartsWith("f'") && expr.EndsWith("'"))
+        {
+            string content = expr.Substring(2, expr.Length - 3);
+            return EvaluateFString(content);
+        }
 
         Match strMatch = Regex.Match(expr, @"^['""](.*)['""]$");
         if (strMatch.Success)
@@ -556,6 +711,91 @@ public class InterpreterEngine
             return expr;
 
         return expr;
+    }
+
+    string EvaluateFString(string content)
+    {
+        var result = new StringBuilder();
+        int i = 0;
+
+        while (i < content.Length)
+        {
+            if (content[i] == '{')
+            {
+                int closeBrace = content.IndexOf('}', i);
+                if (closeBrace > i)
+                {
+                    string varName = content.Substring(i + 1, closeBrace - i - 1).Trim();
+                    if (variables.TryGetValue(varName, out object value))
+                    {
+                        result.Append(ValueToPrintString(value));
+                    }
+                    else
+                    {
+                        result.Append("{" + varName + "}");
+                    }
+                    i = closeBrace + 1;
+                    continue;
+                }
+            }
+
+            result.Append(content[i]);
+            i++;
+        }
+
+        return result.ToString();
+    }
+
+    object CallFunction(string funcName, List<string> argValues)
+    {
+        if (!functions.ContainsKey(funcName))
+            return null;
+
+        FunctionDefinition func = functions[funcName];
+
+        // Сохраняем текущие значения переменных (для локальной области видимости)
+        Dictionary<string, object> savedVars = new Dictionary<string, object>();
+        foreach (var param in func.parameters)
+        {
+            if (variables.ContainsKey(param))
+                savedVars[param] = variables[param];
+        }
+
+        // Присваиваем аргументы параметрам
+        for (int i = 0; i < func.parameters.Count && i < argValues.Count; i++)
+        {
+            string paramName = func.parameters[i];
+            string argExpr = argValues[i];
+
+            // Вычисляем значение аргумента
+            object argValue = EvaluateRaw(argExpr);
+            variables[paramName] = argValue;
+        }
+
+        // Сбрасываем флаг return
+        hasReturned = false;
+        returnValue = null;
+
+        // Выполняем тело функции
+        Execute(func.body);
+
+        // Результат функции - значение из return
+        object result = hasReturned ? returnValue : null;
+
+        // Сбрасываем флаг return после выполнения
+        hasReturned = false;
+        returnValue = null;
+
+        // Восстанавливаем переменные
+        foreach (var param in func.parameters)
+        {
+            if (savedVars.ContainsKey(param))
+                variables[param] = savedVars[param];
+            else
+                variables.Remove(param);
+        }
+
+        return result;
     }
 
     static string ValueToPrintString(object v)

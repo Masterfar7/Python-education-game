@@ -68,4 +68,27 @@ public class DialogueLine
     // Скрыть окно диалога на указанное время (в секундах)
     public bool hideDialogueWindow;
     public float hideDialogueWindowDuration = 2f;
+
+    [Header("Walking Dialogue (Chapter 3)")]
+    [Tooltip("Персонажи идут во время диалога, можно листать фразы")]
+    public bool walkingDialogue;
+
+    [Tooltip("Количество фраз, которые можно пролистать пока персонажи идут")]
+    public int walkingDialoguePhrasesCount = 3;
+
+    [Header("Spirits Animation (Chapter 3)")]
+    [Tooltip("Появление 3 духов на этой реплике")]
+    public bool spawnSpirits;
+    public GameObject[] spirits; // Массив из 3 духов
+
+    [Tooltip("Запустить анимацию духов после выполнения задания")]
+    public bool animateSpiritsAfterTask;
+
+    [Tooltip("Скорость смены спрайтов духов (секунды между кадрами)")]
+    public float spiritAnimationFrameRate = 0.1f;
+
+    [Header("Runes Activation (Chapter 3)")]
+    [Tooltip("Активировать 3 руны после выполнения задания")]
+    public bool activateRunesAfterTask;
+    public ThreeRunesActivation runesController;
 }

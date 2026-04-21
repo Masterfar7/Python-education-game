@@ -76,6 +76,15 @@ public class DialogueManager : MonoBehaviour
     private int adminSkipTargetTaskIndex = -1;
     private bool statueAwakened = false;
 
+    // Walking Dialogue (Chapter 3)
+    private bool isWalkingDialogue = false;
+    private int walkingDialoguePhrasesRemaining = 0;
+    private Coroutine walkingDialogueCoroutine;
+
+    // Spirits Animation (Chapter 3)
+    private bool waitingForSpiritAnimation = false;
+    private Coroutine spiritAnimationCoroutine;
+
     private Coroutine typingCoroutine;
     /// <summary>Кадр, в котором показана текущая реплика — защита от двойного клика в том же кадре (переход + «догнать печать»).</summary>
     private int lineShownAtFrame = -1;
@@ -91,6 +100,15 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
         dialoguePanel.SetActive(false);
         nextButton.onClick.AddListener(OnNextButton);
+
+        // Проверяем наличие EventSystem
+        if (UnityEngine.EventSystems.EventSystem.current == null)
+        {
+            GameObject eventSystem = new GameObject("EventSystem");
+            eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            Debug.Log("DialogueManager: EventSystem создан автоматически");
+        }
 
         if (player != null && playerRb == null)
             playerRb = player.GetComponent<Rigidbody2D>();
@@ -157,7 +175,45 @@ public class DialogueManager : MonoBehaviour
 
     public void OnNextButton()
     {
-        if (!isActive || taskMode || isMovingCharacters) return;
+        Debug.Log($"OnNextButton: isActive={isActive}, taskMode={taskMode}, isMovingCharacters={isMovingCharacters}, isWalkingDialogue={isWalkingDialogue}, walkingDialoguePhrasesRemaining={walkingDialoguePhrasesRemaining}");
+
+        if (!isActive || taskMode) return;
+
+        // В режиме walking dialogue
+        if (isWalkingDialogue)
+        {
+            // Если это последняя фраза из walking dialogue - блокируем до окончания движения
+            if (walkingDialoguePhrasesRemaining <= 1 && isMovingCharacters)
+                return;
+
+            if (isTyping)
+            {
+                if (Time.frameCount == lineShownAtFrame)
+                    return;
+
+                StopCoroutine(typingCoroutine);
+                dialogueText.text = lines[index].text;
+                isTyping = false;
+                return;
+            }
+
+            if (walkingDialoguePhrasesRemaining > 0)
+                walkingDialoguePhrasesRemaining--;
+
+            index++;
+
+            if (index >= lines.Length)
+            {
+                EndDialogue();
+                return;
+            }
+
+            ShowLine();
+            return;
+        }
+
+        // Обычный режим: блокируем если персонажи двигаются
+        if (isMovingCharacters) return;
 
         if (isTyping)
         {
@@ -188,6 +244,25 @@ public class DialogueManager : MonoBehaviour
         if (!isActive) return;
 
         ClearTaskObjectUI(destroyLinkedObject: true);
+
+        DialogueLine currentLine = lines[index];
+
+        // Проверяем, нужна ли активация рун после этого задания
+        if (currentLine.activateRunesAfterTask && currentLine.runesController != null)
+        {
+            currentLine.runesController.ActivateAllRunes();
+        }
+
+        // Проверяем, нужна ли анимация духов после этого задания
+        if (currentLine.animateSpiritsAfterTask && currentLine.spirits != null && currentLine.spirits.Length > 0)
+        {
+            // Запускаем анимацию духов
+            if (spiritAnimationCoroutine != null)
+                StopCoroutine(spiritAnimationCoroutine);
+
+            spiritAnimationCoroutine = StartCoroutine(AnimateSpiritsAfterTask(currentLine, pauseDialogueBeforeNextLineAfterFirstTask));
+            return;
+        }
 
         // Убрали автоматическую гибель сорняков при выполнении задания
         // Теперь сорняки гибнут ТОЛЬКО при галочке startWeedsDeath на нужной фразе
@@ -318,6 +393,22 @@ public class DialogueManager : MonoBehaviour
         if (line.activateLever && line.leverToActivate != null)
             line.leverToActivate.ActivateLever();
 
+        // Появление духов на этой реплике
+        if (line.spawnSpirits && line.spirits != null && line.spirits.Length > 0)
+        {
+            foreach (var spirit in line.spirits)
+            {
+                if (spirit != null)
+                {
+                    spirit.SetActive(true);
+                    // Отключаем Animator чтобы анимация не запускалась автоматически
+                    Animator animator = spirit.GetComponent<Animator>();
+                    if (animator != null)
+                        animator.enabled = false;
+                }
+            }
+        }
+
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
@@ -369,7 +460,24 @@ public class DialogueManager : MonoBehaviour
 
         // Кинематическое движение персонажей по этой реплике
         if (line.moveCharacters)
-            StartCoroutine(MoveCharactersToTargets(line));
+        {
+            // Проверяем, включен ли режим walking dialogue
+            if (line.walkingDialogue && line.walkingDialoguePhrasesCount > 0)
+            {
+                isWalkingDialogue = true;
+                walkingDialoguePhrasesRemaining = line.walkingDialoguePhrasesCount;
+
+                if (walkingDialogueCoroutine != null)
+                    StopCoroutine(walkingDialogueCoroutine);
+
+                walkingDialogueCoroutine = StartCoroutine(MoveCharactersWhileTalking(line));
+            }
+            else
+            {
+                // Обычный режим: блокируем кнопку "далее" на время движения
+                StartCoroutine(MoveCharactersToTargets(line));
+            }
+        }
     }
 
     private IEnumerator TypeText(string text)
@@ -777,6 +885,216 @@ public class DialogueManager : MonoBehaviour
             playerMovement.enabled = true;
 
         isMovingCharacters = false;
+    }
+
+    private IEnumerator MoveCharactersWhileTalking(DialogueLine line)
+    {
+        isMovingCharacters = true;
+
+        // Блокируем вход игрока на время движения
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
+        // Подготовка маршрутов
+        Transform[] playerRoute = (line.playerPath != null && line.playerPath.Length > 0)
+            ? line.playerPath
+            : (line.playerMoveTarget != null ? new[] { line.playerMoveTarget } : null);
+
+        Transform[] guideRoute = (line.guidePath != null && line.guidePath.Length > 0)
+            ? line.guidePath
+            : (line.guideMoveTarget != null ? new[] { line.guideMoveTarget } : null);
+
+        int playerRouteIndex = 0;
+        int guideRouteIndex = 0;
+
+        // Выбираем скорости
+        float playerSpeed = line.playerMoveSpeed > 0f
+            ? line.playerMoveSpeed
+            : (line.moveSpeedOverride > 0f ? line.moveSpeedOverride : autoMoveSpeed);
+
+        float guideSpeed = line.guideMoveSpeed > 0f
+            ? line.guideMoveSpeed
+            : (line.moveSpeedOverride > 0f ? line.moveSpeedOverride : autoMoveSpeed);
+
+        while (true)
+        {
+            bool playerHasTarget = player != null && playerRoute != null && playerRouteIndex < playerRoute.Length;
+            bool guideHasTarget = guide != null && guideRoute != null && guideRouteIndex < guideRoute.Length;
+
+            bool playerDone = !playerHasTarget;
+            bool guideDone = !guideHasTarget;
+
+            if (playerHasTarget)
+            {
+                Transform targetPoint = playerRoute[playerRouteIndex];
+                Vector2 current = playerRb != null ? playerRb.position : (Vector2)player.position;
+                Vector2 target = targetPoint.position;
+                Vector2 toTarget = target - current;
+
+                if (toTarget.magnitude <= autoMoveStopDistance)
+                {
+                    playerDone = true;
+                    if (playerRb != null) playerRb.linearVelocity = Vector2.zero;
+                    else player.position = target;
+
+                    playerRouteIndex++;
+                }
+                else
+                {
+                    Vector2 dir = toTarget.normalized;
+                    if (playerRb != null)
+                        playerRb.linearVelocity = dir * playerSpeed;
+                    else
+                        player.position = Vector2.MoveTowards(player.position, target, playerSpeed * Time.deltaTime);
+
+                    if (playerSprite != null && Mathf.Abs(dir.x) > 0.01f)
+                    {
+                        playerSprite.flipX = playerFlipXFacesRight ? dir.x > 0f : dir.x < 0f;
+                    }
+                }
+            }
+
+            if (guideHasTarget)
+            {
+                Transform targetPoint = guideRoute[guideRouteIndex];
+                Vector2 current = guideRb != null ? guideRb.position : (Vector2)guide.position;
+                Vector2 target = targetPoint.position;
+                Vector2 toTarget = target - current;
+
+                if (toTarget.magnitude <= autoMoveStopDistance)
+                {
+                    guideDone = true;
+                    if (guideRb != null) guideRb.linearVelocity = Vector2.zero;
+                    else guide.position = target;
+
+                    guideRouteIndex++;
+                }
+                else
+                {
+                    Vector2 dir = toTarget.normalized;
+                    if (guideRb != null)
+                        guideRb.linearVelocity = dir * guideSpeed;
+                    else
+                        guide.position = Vector2.MoveTowards(guide.position, target, guideSpeed * Time.deltaTime);
+
+                    if (guideSprite != null && Mathf.Abs(dir.x) > 0.01f)
+                    {
+                        guideSprite.flipX = guideFlipXFacesRight ? dir.x > 0f : dir.x < 0f;
+                    }
+                }
+            }
+
+            if (playerDone && guideDone)
+                break;
+
+            yield return null;
+        }
+
+        // Останавливаем скорость
+        if (playerRb != null) playerRb.linearVelocity = Vector2.zero;
+        if (guideRb != null) guideRb.linearVelocity = Vector2.zero;
+
+        // Смотрят друг на друга
+        if (player != null && guide != null && playerSprite != null && guideSprite != null)
+        {
+            bool playerOnLeft = player.position.x < guide.position.x;
+
+            bool playerShouldFaceRight = playerOnLeft;
+            playerSprite.flipX = playerFlipXFacesRight
+                ? playerShouldFaceRight
+                : !playerShouldFaceRight;
+
+            bool guideShouldFaceRight = !playerOnLeft;
+            guideSprite.flipX = guideFlipXFacesRight
+                ? guideShouldFaceRight
+                : !guideShouldFaceRight;
+        }
+
+        // Возвращаем управление игроку
+        if (playerMovement != null)
+            playerMovement.enabled = true;
+
+        // Сбрасываем режим walking dialogue
+        isWalkingDialogue = false;
+        walkingDialoguePhrasesRemaining = 0;
+        walkingDialogueCoroutine = null;
+        isMovingCharacters = false;
+    }
+
+    private IEnumerator AnimateSpiritsAfterTask(DialogueLine line, bool pauseDialogueBeforeNextLineAfterFirstTask)
+    {
+        waitingForSpiritAnimation = true;
+
+        // Скрываем окно диалога
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        // Увеличиваем прогресс уровня
+        if (levelProgressUI != null)
+        {
+            levelProgressUI.CompleteTask();
+        }
+
+        // Выходим из taskMode
+        taskMode = false;
+
+        // Скрываем интерпретатор
+        if (interpreterCanvas != null)
+            interpreterCanvas.SetActive(false);
+
+        // Разблокируем движение
+        if (playerMovement != null)
+            playerMovement.enabled = true;
+
+        // Анимация духов (предполагается, что у каждого духа есть компонент Animator)
+        foreach (var spirit in line.spirits)
+        {
+            if (spirit != null)
+            {
+                Animator animator = spirit.GetComponent<Animator>();
+                if (animator != null)
+                {
+                    animator.enabled = true; // Включаем Animator перед запуском анимации
+                    animator.SetTrigger("Play");
+                }
+            }
+        }
+
+        // Ждём завершения анимации
+        float animationDuration = line.spiritAnimationFrameRate * 10;
+        yield return new WaitForSeconds(animationDuration);
+
+        // Скрываем духов после анимации
+        foreach (var spirit in line.spirits)
+        {
+            if (spirit != null)
+            {
+                spirit.SetActive(false);
+            }
+        }
+
+        waitingForSpiritAnimation = false;
+        spiritAnimationCoroutine = null;
+
+        // Показываем окно диалога обратно
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        // Продолжаем диалог
+        bool usePause = pauseDialogueBeforeNextLineAfterFirstTask &&
+                        hideDialoguePanelAfterFirstTaskSeconds > 0f;
+
+        if (usePause)
+        {
+            if (firstTaskDialogueResumeCoroutine != null)
+                StopCoroutine(firstTaskDialogueResumeCoroutine);
+            if (dialoguePanel != null)
+                dialoguePanel.SetActive(false);
+            firstTaskDialogueResumeCoroutine = StartCoroutine(ResumeDialogueAfterFirstTaskPause());
+            yield break;
+        }
+
+        AdvanceDialogueAfterTaskCompleted();
     }
 
     private void EndDialogue()

@@ -6,9 +6,19 @@ public class NPCDialogue : MonoBehaviour
     public DialogueLine[] dialogueLines;
     private bool dialogueAutoStarted;
 
+    [Tooltip("Запустить диалог сразу при старте сцены (без триггера)")]
+    public bool startOnSceneLoad = false;
+
     private void Start()
     {
-        StartCoroutine(CheckPlayerAlreadyInTriggerNextFrame());
+        if (startOnSceneLoad)
+        {
+            TryStartDialogue();
+        }
+        else
+        {
+            StartCoroutine(CheckPlayerAlreadyInTriggerNextFrame());
+        }
     }
 
     private IEnumerator CheckPlayerAlreadyInTriggerNextFrame()
