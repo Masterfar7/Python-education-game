@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/fsd.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 877b94edd9ef5ab49854e06f500c7947
+  - enabled: 1
     path: Assets/Scenes/Chapter1.unity
     guid: 478c8c9a288e83048be559ad85cea005
   - enabled: 1
@@ -17,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Chapter3.unity
     guid: c5f73d4e714e76c41b22455339fa07a3
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: da6467ce3453ef548ae8d7e4ac64f6c3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

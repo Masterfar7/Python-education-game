@@ -6,6 +6,7 @@ using System.Collections;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    public static int PendingStartIndex = -1;
 
     [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
@@ -13,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image portraitImage;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Button nextButton;
+
+    [Header("Long Text Window")]
+    [SerializeField] private DialogueLongTextWindow longTextWindow;
 
     [Header("Characters")]
     [SerializeField] private Sprite playerPortrait;
@@ -63,8 +67,17 @@ public class DialogueManager : MonoBehaviour
     [Header("Level Progress System")]
     [SerializeField] private LevelProgressUI levelProgressUI;
 
+    [Header("Audio Voiceover")]
+    [SerializeField] private AudioSource voiceoverSource;
+    [SerializeField] private float voiceoverVolume = 1f;
+
     private DialogueLine[] lines;
     private int index;
+    public int CurrentDialogueIndex => index;
+
+    public Transform GetPlayerTransform() => player;
+    public Transform GetGuideTransform() => guide;
+
     private bool isActive;
     private bool isTyping;
     private bool taskMode = false;
@@ -119,6 +132,18 @@ public class DialogueManager : MonoBehaviour
         if (guide != null && guideSprite == null)
             guideSprite = guide.GetComponent<SpriteRenderer>();
 
+        // Инициализация AudioSource для озвучки
+        if (voiceoverSource == null)
+        {
+            voiceoverSource = gameObject.AddComponent<AudioSource>();
+            voiceoverSource.playOnAwake = false;
+            voiceoverSource.volume = voiceoverVolume;
+        }
+        else
+        {
+            voiceoverSource.volume = voiceoverVolume;
+        }
+
         // Скрываем интерпретатор при старте
         if (interpreterCanvas != null)
             interpreterCanvas.SetActive(false);
@@ -127,18 +152,52 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         taskSystem = FindObjectOfType<TaskSystem>();
+
+        int savedIndex = PlayerPrefs.GetInt("ContinueDialogueIndex", -1);
+        if (savedIndex >= 0)
+        {
+            PlayerPrefs.DeleteKey("ContinueDialogueIndex");
+            PlayerPrefs.Save();
+            PendingStartIndex = savedIndex;
+
+            Vector2? playerPos = SaveSystem.LoadPlayerPosition();
+            Vector2? guidePos = SaveSystem.LoadGuidePosition();
+
+            if (player != null && playerPos.HasValue)
+            {
+                player.position = playerPos.Value;
+                Debug.Log($"Восстановлена позиция игрока: {playerPos.Value}");
+            }
+            if (guide != null && guidePos.HasValue)
+            {
+                guide.position = guidePos.Value;
+                Debug.Log($"Восстановлена позиция гида: {guidePos.Value}");
+            }
+
+            Debug.Log($"DialogueManager.Start: установлен PendingStartIndex={savedIndex}");
+        }
     }
 
     public bool IsActive() => isActive;
     public bool IsTaskMode() => taskMode;
 
-    public void StartDialogue(DialogueLine[] dialogueLines)
+    public void StartDialogue(DialogueLine[] dialogueLines, int startIndex = -1)
     {
         if (dialogueLines == null || dialogueLines.Length == 0)
             return;
 
+        // Останавливаем предыдущее аудио при начале нового диалога
+        StopVoiceover();
+
+        int idx = startIndex;
+        if (idx < 0 && PendingStartIndex >= 0)
+            idx = PendingStartIndex;
+
+        Debug.Log($"StartDialogue: startIndex={startIndex}, PendingStartIndex={PendingStartIndex}, 最终index={idx}");
+
         lines = dialogueLines;
-        index = 0;
+        index = Mathf.Clamp(idx, 0, dialogueLines.Length - 1);
+        PendingStartIndex = -1;
         isActive = true;
         taskMode = false;
         instantTextMode = false;
@@ -178,6 +237,35 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"OnNextButton: isActive={isActive}, taskMode={taskMode}, isMovingCharacters={isMovingCharacters}, isWalkingDialogue={isWalkingDialogue}, walkingDialoguePhrasesRemaining={walkingDialoguePhrasesRemaining}");
 
         if (!isActive || taskMode) return;
+
+        // Останавливаем аудио при переходе к следующей фразе
+        StopVoiceover();
+
+        // Если открыто окно длинного текста
+        if (longTextWindow != null && longTextWindow.IsActive())
+        {
+            // Если текст еще печатается - показываем весь текст
+            if (longTextWindow.IsTyping())
+            {
+                longTextWindow.ShowFullText(lines[index].text);
+                return;
+            }
+            else
+            {
+                // Текст напечатан - закрываем окно и переходим к следующей реплике
+                longTextWindow.HideLongText();
+
+                index++;
+                if (index >= lines.Length)
+                {
+                    EndDialogue();
+                    return;
+                }
+
+                ShowLine();
+                return;
+            }
+        }
 
         // В режиме walking dialogue
         if (isWalkingDialogue)
@@ -243,6 +331,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (!isActive) return;
 
+        // Останавливаем аудио при выполнении задания
+        StopVoiceover();
+
         ClearTaskObjectUI(destroyLinkedObject: true);
 
         DialogueLine currentLine = lines[index];
@@ -251,6 +342,12 @@ public class DialogueManager : MonoBehaviour
         if (currentLine.activateRunesAfterTask && currentLine.runesController != null)
         {
             currentLine.runesController.ActivateAllRunes();
+        }
+
+        // Проверяем, нужна ли активация портала после этого задания
+        if (currentLine.activatePortalAfterTask && currentLine.portalToActivate != null)
+        {
+            currentLine.portalToActivate.ActivatePortal();
         }
 
         // Проверяем, нужна ли анимация духов после этого задания
@@ -272,6 +369,11 @@ public class DialogueManager : MonoBehaviour
         {
             levelProgressUI.CompleteTask();
         }
+
+        Debug.Log($"OnTaskCompleted: index={index}");
+
+        // Сохранение только при выходе из диалога, не после каждого задания
+        // SaveSystem.AutoSaveWithAchievements(AchievementSystem.GetAll());
 
         // Выходим из taskMode
         taskMode = false;
@@ -302,6 +404,18 @@ public class DialogueManager : MonoBehaviour
 
     void AdvanceDialogueAfterTaskCompleted()
     {
+        if (longTextWindow != null && longTextWindow.IsActive())
+        {
+            longTextWindow.HideLongText();
+        }
+
+        DialogueLine currentLine = lines[index];
+
+        if (currentLine.useLongTextWindow && longTextWindow != null && longTextWindow.IsActive())
+        {
+            return;
+        }
+
         index++;
 
         if (index >= lines.Length)
@@ -313,10 +427,8 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel != null)
             dialoguePanel.SetActive(true);
 
-        // Показываем кнопку "далее"
         nextButton.gameObject.SetActive(true);
 
-        // Показываем следующую реплику
         ShowLine();
     }
 
@@ -333,6 +445,28 @@ public class DialogueManager : MonoBehaviour
     private void ShowLine()
     {
         DialogueLine line = lines[index];
+
+        // Воспроизведение аудио озвучки для текущей фразы
+        PlayVoiceover(line);
+
+        if (longTextWindow != null && longTextWindow.IsActive())
+            longTextWindow.HideLongText();
+
+        if (line.useLongTextWindow)
+        {
+            if (dialoguePanel != null)
+                dialoguePanel.SetActive(false);
+
+            if (longTextWindow != null)
+            {
+                longTextWindow.ShowLongText(line.text);
+            }
+        }
+        else
+        {
+            if (dialoguePanel != null)
+                dialoguePanel.SetActive(true);
+        }
 
         // Остановить старую тряску
         if (statueShake != null)
@@ -458,10 +592,8 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // Кинематическое движение персонажей по этой реплике
         if (line.moveCharacters)
         {
-            // Проверяем, включен ли режим walking dialogue
             if (line.walkingDialogue && line.walkingDialoguePhrasesCount > 0)
             {
                 isWalkingDialogue = true;
@@ -474,9 +606,13 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                // Обычный режим: блокируем кнопку "далее" на время движения
                 StartCoroutine(MoveCharactersToTargets(line));
             }
+        }
+
+        if (line.isFinalPoint && line.finalPointTarget != null)
+        {
+            StartCoroutine(HandleFinalPoint(line));
         }
     }
 
@@ -487,7 +623,6 @@ public class DialogueManager : MonoBehaviour
 
         if (instantTextMode)
         {
-            // Мгновенно выводим весь текст (для админского режима)
             dialogueText.text = text;
             isTyping = false;
             yield break;
@@ -1158,7 +1293,13 @@ public class DialogueManager : MonoBehaviour
         if (statueShake != null)
             statueShake.StopShake();
 
+        // Остановить аудио озвучки
+        StopVoiceover();
+
         statueAwakened = false;
+
+        Debug.Log("EndDialogue: сохраняем прогресс...");
+        SaveSystem.AutoSaveWithAchievements(AchievementSystem.GetAll());
     }
 
     /// <summary>
@@ -1254,6 +1395,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (dialoguePanel != null && !dialoguePanel.activeSelf)
+        {
+            dialoguePanel.SetActive(true);
+        }
+
         lineShownAtFrame = Time.frameCount;
         typingCoroutine = StartCoroutine(TypeText(newText));
     }
@@ -1305,5 +1451,101 @@ public class DialogueManager : MonoBehaviour
             activeTaskObjectUI.HideWithoutDestroy();
 
         activeTaskObjectUI = null;
+    }
+
+    private IEnumerator HandleFinalPoint(DialogueLine line)
+    {
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
+        nextButton.interactable = false;
+
+        Vector2 targetPos = line.finalPointTarget.position;
+        Vector2 direction = (targetPos - (Vector2)player.position).normalized;
+
+        Debug.Log($"HandleFinalPoint: движение к точке {targetPos}");
+
+        float walkTime = 1f;
+        float elapsed = 0f;
+
+        while (elapsed < walkTime)
+        {
+            elapsed += Time.deltaTime;
+
+            if (playerRb != null)
+                playerRb.linearVelocity = direction * autoMoveSpeed;
+            else
+                player.position = Vector2.MoveTowards(player.position, targetPos, autoMoveSpeed * Time.deltaTime);
+
+            if (playerSprite != null)
+            {
+                if (direction.x > 0.01f)
+                    playerSprite.flipX = !playerFlipXFacesRight;
+                else if (direction.x < -0.01f)
+                    playerSprite.flipX = playerFlipXFacesRight;
+            }
+
+            yield return null;
+        }
+
+        Debug.Log("HandleFinalPoint: останавливаем персонажа");
+
+        if (playerRb != null)
+            playerRb.linearVelocity = Vector2.zero;
+
+        Debug.Log("HandleFinalPoint: начинаем fade out");
+
+        if (fadeCanvas != null)
+        {
+            yield return StartCoroutine(FadeOut());
+        }
+
+        Debug.Log($"HandleFinalPoint: загружаем сцену {line.sceneToLoad}");
+
+        if (!string.IsNullOrEmpty(line.sceneToLoad))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(line.sceneToLoad);
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            fadeCanvas.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
+            yield return null;
+        }
+        fadeCanvas.alpha = 1f;
+    }
+
+    private void PlayVoiceover(DialogueLine line)
+    {
+        if (voiceoverSource == null)
+            return;
+
+        // Останавливаем предыдущее аудио
+        if (voiceoverSource.isPlaying)
+            voiceoverSource.Stop();
+
+        // Если для текущей фразы есть аудиоклип, воспроизводим его
+        if (line.voiceoverClip != null)
+        {
+            voiceoverSource.clip = line.voiceoverClip;
+            voiceoverSource.Play();
+            Debug.Log($"Воспроизведение озвучки для фразы: {line.text.Substring(0, Mathf.Min(30, line.text.Length))}...");
+        }
+    }
+
+    private void StopVoiceover()
+    {
+        if (voiceoverSource != null && voiceoverSource.isPlaying)
+        {
+            voiceoverSource.Stop();
+        }
     }
 }

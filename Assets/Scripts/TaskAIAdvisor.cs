@@ -17,14 +17,20 @@ public class TaskAIAdvisor : MonoBehaviour
     {
         public bool correct;
         public string hint;
+        public string error_type;
     }
 
+    public const string ERROR_NONE = "none";
+    public const string ERROR_SYNTAX = "syntax_error";
+    public const string ERROR_RUNTIME = "runtime_error";
+    public const string ERROR_LOGIC = "logic_error";
+
     /// <summary>
-    /// Запрос к ИИ: верен ли ответ на задание и короткая подсказка.
-    /// callback(correct, hint)
+    /// Запрос к ИИ: верен ли ответ на задание, короткая подсказка и тип ошибки.
+    /// callback(correct, hint, errorType)
     /// </summary>
     public async void EvaluateSolution(TaskData task, string userCode, string engineOutput,
-        Action<bool, string> callback)
+        Action<bool, string, string> callback)
     {
         string url =
             $"https://api.cloudflare.com/client/v4/accounts/{AccountId}/ai/run/{Model}";
@@ -35,12 +41,17 @@ public class TaskAIAdvisor : MonoBehaviour
 
         string prompt =
             "Ты помощник по Python внутри обучающей игры. " +
-            "Твоя задача — оценить, верно ли выполнено задание и дать КОРОТКУЮ подсказку без полного решения и без показа полного кода-ответа.\n\n" +
+            "Твоя задача — оценить, верно ли выполнено задание, дать КОРОТКУЮ подсказку и классифицировать ошибку.\n\n" +
+            "Типы ошибок:\n" +
+            "- syntax_error: неверный синтаксис Python\n" +
+            "- runtime_error: ошибка выполнения (деление на 0, обращение к несуществующей переменной и т.д.)\n" +
+            "- logic_error: синтаксис верный, но логика неверна\n" +
+            "- none: задание выполнено верно\n\n" +
             $"Задание: {task.taskDescription}\n\n" +
             referencePart +
             $"Код игрока:\n{userCode}\n\n" +
             $"Последний вывод интерпретатора (print): {engineOutput}\n\n" +
-            "Ответь строго в JSON вида: {\"correct\":true/false,\"hint\":\"краткая подсказка\"}.";
+            "Ответь строго в JSON вида: {\"correct\":true/false,\"hint\":\"краткая подсказка\",\"error_type\":\"syntax_error|runtime_error|logic_error|none\"}.";
 
         // Аккуратно экранируем строку для JSON: кавычки, обратные слэши, переносы строк.
         string contentEscaped = prompt
@@ -68,7 +79,7 @@ public class TaskAIAdvisor : MonoBehaviour
                 if (!response.IsSuccessStatusCode)
                 {
                     Debug.LogError($"TaskAIAdvisor HTTP error: {response.StatusCode}\n{body}");
-                    callback?.Invoke(false, "Не удалось связаться с ИИ. Попробуй ещё раз чуть позже.");
+                    callback?.Invoke(false, "Не удалось связаться с ИИ. Попробуй ещё раз чуть позже.", ERROR_NONE);
                     return;
                 }
 
@@ -76,6 +87,7 @@ public class TaskAIAdvisor : MonoBehaviour
 
                 bool correct = false;
                 string hint = "Попробуй ещё раз. Подумай, что именно проверяет задание.";
+                string errorType = ERROR_NONE;
 
                 try
                 {
@@ -85,6 +97,8 @@ public class TaskAIAdvisor : MonoBehaviour
                         correct = parsed.correct;
                         if (!string.IsNullOrWhiteSpace(parsed.hint))
                             hint = parsed.hint.Trim();
+                        if (!string.IsNullOrWhiteSpace(parsed.error_type))
+                            errorType = parsed.error_type;
                     }
                 }
                 catch (Exception e)
@@ -92,12 +106,12 @@ public class TaskAIAdvisor : MonoBehaviour
                     Debug.LogWarning("TaskAIAdvisor parse error: " + e.Message + "\nAI TEXT:\n" + aiText);
                 }
 
-                callback?.Invoke(correct, hint);
+                callback?.Invoke(correct, hint, errorType);
             }
             catch (Exception ex)
             {
                 Debug.LogError("TaskAIAdvisor exception: " + ex.Message);
-                callback?.Invoke(false, "Ошибка связи с ИИ. Проверь интернет.");
+                callback?.Invoke(false, "Ошибка связи с ИИ. Проверь интернет.", ERROR_NONE);
             }
         }
     }

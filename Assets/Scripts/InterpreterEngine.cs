@@ -748,6 +748,19 @@ public class InterpreterEngine
 
     object CallFunction(string funcName, List<string> argValues)
     {
+        if (funcName == "len")
+        {
+            if (argValues.Count > 0)
+            {
+                object val = EvaluateRaw(argValues[0]);
+                if (val is List<object> lst)
+                    return (float)lst.Count;
+                if (val is string str)
+                    return (float)str.Length;
+            }
+            return 0f;
+        }
+
         if (!functions.ContainsKey(funcName))
             return null;
 
@@ -964,6 +977,53 @@ public class InterpreterEngine
 
         if (expr == "True") return true;
         if (expr == "False") return false;
+
+        string[] compOps = { "==", "!=", "<=", ">=", "<", ">" };
+        foreach (string op in compOps)
+        {
+            int idx = expr.IndexOf(op, System.StringComparison.Ordinal);
+            if (idx > 0)
+            {
+                string left = expr.Substring(0, idx).Trim();
+                string right = expr.Substring(idx + op.Length).Trim();
+
+                object leftVal = EvaluateRaw(left);
+                object rightVal = EvaluateRaw(right);
+
+                float leftNum = 0, rightNum = 0;
+                bool leftIsNum = false, rightIsNum = false;
+
+                if (leftVal is float lf) { leftNum = lf; leftIsNum = true; }
+                else if (float.TryParse(leftVal?.ToString(), out float lparsed)) { leftNum = lparsed; leftIsNum = true; }
+
+                if (rightVal is float rf) { rightNum = rf; rightIsNum = true; }
+                else if (float.TryParse(rightVal?.ToString(), out float rparsed)) { rightNum = rparsed; rightIsNum = true; }
+
+                if (leftIsNum && rightIsNum)
+                {
+                    switch (op)
+                    {
+                        case "==": return Mathf.Approximately(leftNum, rightNum);
+                        case "!=": return !Mathf.Approximately(leftNum, rightNum);
+                        case "<": return leftNum < rightNum;
+                        case ">": return leftNum > rightNum;
+                        case "<=": return leftNum <= rightNum;
+                        case ">=": return leftNum >= rightNum;
+                    }
+                }
+                else
+                {
+                    string leftStr = leftVal?.ToString() ?? "";
+                    string rightStr = rightVal?.ToString() ?? "";
+
+                    switch (op)
+                    {
+                        case "==": return leftStr == rightStr;
+                        case "!=": return leftStr != rightStr;
+                    }
+                }
+            }
+        }
 
         if (variables.ContainsKey(expr))
         {

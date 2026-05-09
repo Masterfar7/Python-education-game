@@ -33,6 +33,12 @@ public class TaskSystem : MonoBehaviour
         runButton.onClick.AddListener(ExecuteCode);
     }
 
+    private int CountCodeLines(string code)
+    {
+        if (string.IsNullOrWhiteSpace(code)) return 0;
+        return code.Split('\n').Length;
+    }
+
     // Сброс для нового диалога
     public void ResetTasks()
     {
@@ -46,7 +52,6 @@ public class TaskSystem : MonoBehaviour
         if (waitingForAI)
             return;
 
-        // Проверяем что мы в режиме задания
         if (!dialogueManager.IsTaskMode())
             return;
 
@@ -54,6 +59,11 @@ public class TaskSystem : MonoBehaviour
 
         if (string.IsNullOrEmpty(code))
             return;
+
+        if (StatisticsManager.Instance != null)
+        {
+            StatisticsManager.Instance.RecordCodeLines(CountCodeLines(code));
+        }
 
         InterpreterEngine snapshotBefore = engine.Clone();
 
@@ -189,8 +199,12 @@ public class TaskSystem : MonoBehaviour
         int completedTaskIndex = currentTaskIndex;
         currentTaskIndex++;
 
-        // Сбрасываем lastPrintedValue для следующего задания
         engine.lastPrintedValue = "";
+
+        if (StatisticsManager.Instance != null)
+        {
+            StatisticsManager.Instance.RecordAttempt(true);
+        }
 
         if (task1CompletionVisuals != null)
         {
@@ -200,7 +214,6 @@ public class TaskSystem : MonoBehaviour
                 task1CompletionVisuals.PlayTask2();
         }
 
-        // Сообщаем DialogueManager что задание выполнено (после 1-го — пауза без панели, см. DialogueManager)
         dialogueManager.OnTaskCompleted(completedTaskIndex == 0);
     }
 
@@ -391,6 +404,11 @@ public class TaskSystem : MonoBehaviour
 
     void OnTaskFailed(TaskData task, string userCode)
     {
+        if (StatisticsManager.Instance != null)
+        {
+            StatisticsManager.Instance.RecordAttempt(false);
+        }
+
         if (aiAdvisor != null)
         {
             waitingForAI = true;
@@ -409,9 +427,17 @@ public class TaskSystem : MonoBehaviour
         }
     }
 
-    void OnAIResult(bool correct, string hint)
+    void OnAIResult(bool correct, string hint, string errorType)
     {
         waitingForAI = false;
+
+        if (!correct && errorType != TaskAIAdvisor.ERROR_NONE)
+        {
+            if (StatisticsManager.Instance != null)
+            {
+                StatisticsManager.Instance.RecordError(errorType);
+            }
+        }
 
         if (!string.IsNullOrWhiteSpace(hint))
             dialogueManager.ReplaceCurrentText(hint);

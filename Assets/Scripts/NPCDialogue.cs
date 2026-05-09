@@ -33,7 +33,7 @@ public class NPCDialogue : MonoBehaviour
             TryStartDialogue();
     }
 
-    private void TryStartDialogue()
+    public void TryStartDialogue()
     {
         if (dialogueAutoStarted) return;
         if (DialogueManager.Instance == null) return;
@@ -41,7 +41,8 @@ public class NPCDialogue : MonoBehaviour
         if (dialogueLines == null || dialogueLines.Length == 0) return;
 
         dialogueAutoStarted = true;
-        DialogueManager.Instance.StartDialogue(dialogueLines);
+        int startIdx = DialogueManager.PendingStartIndex;
+        DialogueManager.Instance.StartDialogue(dialogueLines, startIdx);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

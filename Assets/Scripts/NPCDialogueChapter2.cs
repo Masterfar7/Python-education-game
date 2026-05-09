@@ -14,9 +14,19 @@ public class NPCDialogueChapter2 : MonoBehaviour
 
     private bool dialogueAutoStarted;
 
+    [Tooltip("Запустить диалог сразу при старте сцены")]
+    public bool startOnSceneLoad = false;
+
     private void Start()
     {
-        StartCoroutine(CheckPlayerAlreadyInTriggerNextFrame());
+        if (startOnSceneLoad)
+        {
+            TryStartDialogue();
+        }
+        else
+        {
+            StartCoroutine(CheckPlayerAlreadyInTriggerNextFrame());
+        }
     }
 
     private IEnumerator CheckPlayerAlreadyInTriggerNextFrame()
@@ -31,7 +41,7 @@ public class NPCDialogueChapter2 : MonoBehaviour
             TryStartDialogue();
     }
 
-    private void TryStartDialogue()
+    public void TryStartDialogue()
     {
         if (dialogueAutoStarted) return;
         if (DialogueManager.Instance == null) return;
@@ -40,7 +50,8 @@ public class NPCDialogueChapter2 : MonoBehaviour
 
         dialogueAutoStarted = true;
         DialogueLine[] linesToPlay = BuildDialogueLinesForPlay();
-        DialogueManager.Instance.StartDialogue(linesToPlay);
+        int startIdx = DialogueManager.PendingStartIndex;
+        DialogueManager.Instance.StartDialogue(linesToPlay, startIdx);
     }
 
     private DialogueLine[] BuildDialogueLinesForPlay()

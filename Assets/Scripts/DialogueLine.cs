@@ -91,4 +91,25 @@ public class DialogueLine
     [Tooltip("Активировать 3 руны после выполнения задания")]
     public bool activateRunesAfterTask;
     public ThreeRunesActivation runesController;
+
+    [Header("Portal Activation")]
+    [Tooltip("Активировать портал после выполнения задания")]
+    public bool activatePortalAfterTask;
+    public PortalController portalToActivate;
+
+    [Header("Long Text Window")]
+    [Tooltip("Показать текст в отдельном окне для длинных текстов")]
+    public bool useLongTextWindow;
+
+    [Header("Final Scene")]
+    [Tooltip("Финальная точка: игрок доходит, переход на другую сцену")]
+    public bool isFinalPoint;
+    [Tooltip("Имя сцены для загрузки")]
+    public string sceneToLoad;
+    [Tooltip("Точка, до которой должен дойти игрок")]
+    public Transform finalPointTarget;
+
+    [Header("Audio Voiceover")]
+    [Tooltip("Аудиофайл озвучки для этой фразы")]
+    public AudioClip voiceoverClip;
 }
